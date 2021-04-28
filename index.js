@@ -1,6 +1,6 @@
 const PORT = process.env.PORT || 5000;
 const express = require("express");
-const INDEX = "/index.html";
+const INDEX = "public/index.html";
 
 var app = express();
 var server = app.listen(PORT, () => {

@@ -1,2 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Arvo&display=swap");
+
+body {
+  background-color: rgb(223, 192, 192) !important;
+}
+
+h1 {
+  align-self: center;
+}
