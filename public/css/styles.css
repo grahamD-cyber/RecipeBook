@@ -58,7 +58,7 @@ h1 {
 .burger {
   display: flex;
   position: absolute;
-  right: 50px;
+  right: 14%;
   top: 20px;
   cursor: pointer;
   opacity: 0;
