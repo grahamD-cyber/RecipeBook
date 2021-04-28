@@ -14,16 +14,25 @@
 </head>
 <body>
   <nav class = "nav">
-    <a href = "/" data-link>Home</a>
-    <a href = "/browse" d ata-link>Browse</a>
-    <a href = "/recipe" data-link>Recipe</a>
-    <a href = "/add" data-link>Add Recipe</a>
-    <a href = "/results" data-link>Search Results</a>
+    <div class="background"></div>
+    <img class = "logo" src = "/images/logo.png">
+    <div class = "linkContainer">
+      <a class = "homeButton" href = "/" data-link>Home</a>
+      <a class = "browseButton" href = "/browse" data-link>Browse Recipes</a>
+    </div>
+    <div class="burger">
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
+    </div>
   </nav>
+  <a href = "/recipe" data-link>Recipe</a>
+  <a href = "/add" data-link>Add Recipe</a>
+  <a href = "/results" data-link>Search Results</a>
 
   <div id = "app"></div>
   <script type = "module" src = "/js/home.js"></script>
-
+  <script src="/js/app.js"></script>
 </body>
 </html>
 
