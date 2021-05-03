@@ -10,7 +10,7 @@ body {
   width: 120px;
   height: 120px;
   left: 15px;
-  top: 10px;
+  top: 15px;
 }
 
 nav {
@@ -48,11 +48,17 @@ a:active {
 }
 
 a:focus {
-  border-bottom: 5px solid rgb(37, 37, 37);
+  color: rgb(255, 255, 255);
+  border-bottom: 5px solid rgb(255, 255, 255);
 }
 
 h1 {
   font-family: "Fredericka the Great", cursive;
+  font-size: 40px;
+  color: rgb(37, 37, 37);
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 .burger {
@@ -174,4 +180,10 @@ h1 {
 .toggle .line3 {
   transform: rotate(45deg) translate(-5px, -5px);
   background-color: white;
+}
+
+.shadow {
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc; /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+  -moz-box-shadow: 3px 3px 5px 6px #ccc; /* Firefox 3.5 - 3.6 */
+  box-shadow: 3px 3px 5px 6px #ccc; /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
 }

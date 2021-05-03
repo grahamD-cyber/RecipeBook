@@ -9,30 +9,53 @@
     integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
     crossorigin="anonymous"
   />
+
   <title>Recipe Book App</title>
   <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="stylesheet" href="./css/homeStyles.css" />
+  <!-- <link rel="stylesheet" href="./css/reactStyles.css" /> -->
 </head>
-<body>
-  <nav class = "nav">
-    <div class="background"></div>
-    <img class = "logo" src = "/images/logo.png">
-    <div class = "linkContainer">
-      <a class = "homeButton" href = "/" data-link>Home</a>
-      <a class = "browseButton" href = "/browse" data-link>Browse</a>
-    </div>
-    <div class="burger">
-      <div class="line1"></div>
-      <div class="line2"></div>
-      <div class="line3"></div>
-    </div>
-  </nav>
-  <a href = "/recipe" data-link>Recipe</a>
-  <a href = "/add" data-link>Add Recipe</a>
-  <a href = "/results" data-link>Search Results</a>
+  <body>
+    <nav class = "nav">
+      <div class="background"></div>
+      <img class = "logo" src = "/images/logo.png">
+      <div class = "linkContainer">
+        <a class = "homeButton" href = "/" data-link>Home</a>
+        <a class = "browseButton" href = "/browse" data-link>Browse</a>
+      </div>
+      <div class="burger">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+      </div>
+    </nav>
+    <!-- <a href = "/recipe" data-link>Recipe</a>
+    <a href = "/add" data-link>Add Recipe</a>
+    <a href = "/results" data-link>Search Results</a> -->
+    <!-- Load React. -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <div class="homePage"></div>
+    
+    <script
+      src="https://unpkg.com/react@16/umd/react.production.min.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-  <div id = "app"></div>
-  <script type = "module" src = "/js/home.js"></script>
-  <script src="/js/app.js"></script>
-</body>
+    <script type="text/babel" src="./React/HomePage.js"></script>
+
+    <script type="text/babel">
+      ReactDOM.render(<HomePage/>, document.querySelector(".homePage"));
+    </script>
+
+    <script type = "module" src = "/js/home.js"></script>
+    <script src = "./js/app.js"></script>
+
+
+  </body>
 </html>
 
