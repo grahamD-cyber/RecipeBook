@@ -19,15 +19,16 @@ nav {
   min-height: 135px;
 }
 
-nav .linkContainer {
+nav .header {
   height: 135px;
   position: absolute;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
   right: 0px;
   top: 0px;
   width: 50%;
+  flex-direction: row;
 }
 
 a {

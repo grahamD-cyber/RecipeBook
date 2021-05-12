@@ -1,37 +1,29 @@
-const express = require("express");
+const express = require('express'); // import express module (simplifies routing/requests, among other things)
+const cors = require('cors'); // import the CORS library to allow Cross-origin resource sharing
+const app = express(); // create an instance of the express module (app is the conventional variable name used)
 const path = require("path");
-const dbConfig = require("./dbConfig")
+
+const services = require("./services/api")
+
+const PORT = process.env.PORT || 5000; // use either the host env var port (PORT) provided by Heroku or the local port (5000) on your machine
 
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 
-var app = express();
-const PORT = process.env.PORT || 5000;
+app.use(cors()); // Enable CORS 
+app.use(express.json()); // Recognize Request Objects as JSON objects
+app.use(express.static("build"));		//load the front-end from public folder
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.listen(PORT, () => console.log(`Server running at port : ${PORT})`))
-
-app.use(express.static("public"));
-
-app.get("/", (req, res) => {
-    res.sendFile(path.resolve("public", "index.html"));
-})
-
-app.get("/db", async (req, res) => {
-    const POOL = dbConfig.getPool;
-    POOL.connect((err, client, release) => {
-        if (err) {
-            return console.error('Error acquiring client', err.stack)
-        }
-        client.query('SELECT * FROM public."Recipe" ;', (err, res) => {
-            release();
-            if (err) throw err;
-            for (let row of res.rows) {
-              console.log(JSON.stringify(row));
-            }
-        });
-    })
-    res.end();
-})
-
+app.get("/api/db", async (req, res) => {
+    services.searchRecipeByName('Chicken').then(result => {
+        console.log(result);
+        res.end();
+    }).catch(err => {
+        console.log(err);
+    });
+});
  
+app.listen(PORT, () => console.log(`Server running at port : ${PORT})`))

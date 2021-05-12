@@ -11,4 +11,6 @@ const pool = new Pool({
     }
 });
 
-module.exports.getPool = pool;
+module.exports = {
+  query: (query) => pool.query(query),
+}
