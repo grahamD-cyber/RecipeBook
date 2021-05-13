@@ -64,7 +64,7 @@
   object-fit: contain;
   right: 0px;
   height: 100%;
-  opacity: 15% !important;
+  opacity: 100% !important;
 }
 
 .searchIcon {
