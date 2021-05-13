@@ -7,7 +7,10 @@
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
+<<<<<<< HEAD
     "elemental": "^0.6.1",
+=======
+>>>>>>> f3891bad0cd243b71aabbe1a91b0c5348a5af603
     "react": "^17.0.2",
     "react-addons-css-transition-group": "^15.6.2",
     "react-bootstrap-validation": "^0.1.11",

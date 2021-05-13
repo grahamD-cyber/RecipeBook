@@ -9,6 +9,7 @@ import Home from "./Home";
 import Browse from "./Browse";
 import AddRecipe from "./AddRecipe"
 import SearchRecipe from "./SearchRecipe"
+import RecipePage from "./RecipePage"
  
 class Main extends Component {
   render() {
@@ -34,6 +35,7 @@ class Main extends Component {
             <Route path="/browse" component={Browse}/>
             <Route path="/add" component={AddRecipe}/>
             <Route path="/search" component={SearchRecipe}/>
+            <Route path="/recipe/:recipeId" component={RecipePage}/>
         </div>
         </HashRouter>
     );
