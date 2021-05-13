@@ -1,5 +1,20 @@
 const pool = require("../dbConfig")
 
+const listAllRecipeNames = async function(sort = 0) {
+    // promise - checkout a client
+
+    var query = 'SELECT "idMeal","mealName" FROM public."Recipe" ORDER BY "mealName"'
+    var sortType = ""
+    if (sort == 1) {
+        sortType = "ASC"
+    } else if (sort == -1) {
+        sortType = "DESC"
+    }
+    query = query + " " + sortType;
+    const { rows } = await pool.query(query)
+    return rows;
+}
+
 const listAllRecipes = async function(sort = 0) {
     // promise - checkout a client
 
@@ -11,20 +26,17 @@ const listAllRecipes = async function(sort = 0) {
         sortType = "DESC"
     }
     query = query + " " + sortType;
-    const { rows } = await pool.simpleQuery(query)
+    const { rows } = await pool.query(query)
     return rows;
 }
 
 const getRecipeById = async function(recipeId) {
-    // promise - checkout a client
-    if (typeof recipeId != "number") {
-        throw("The given recipeId is not a number");
-    }
     const query = {
         text: 'SELECT * FROM public."Recipe" WHERE "idMeal" = $1',
         values: [recipeId]
     }
     const { rows } = await pool.query(query)
+    return rows;
 }
 
 const searchRecipeByName = async function(recipeName) {
@@ -40,4 +52,16 @@ const searchRecipeByName = async function(recipeName) {
     return rows;
 }
 
-module.exports = { listAllRecipes, getRecipeById, searchRecipeByName }
+const addRecipe = async function(recipeData) {
+
+}
+
+const updateRecipe = async function(recipeId) {
+    
+}
+
+const deleteRecipe = async function(recipeId) {
+    
+}
+
+module.exports = { listAllRecipeNames, listAllRecipes, getRecipeById, searchRecipeByName, addRecipe, updateRecipe, deleteRecipe }

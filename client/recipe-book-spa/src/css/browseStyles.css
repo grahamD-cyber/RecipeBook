@@ -1,0 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap");
+* {
+  font-family: "Roboto", sans-serif;
+}
+
+h1 {
+    font-family: "Fredericka the Great", cursive;
+    font-size: 40px;
+    color: rgb(37, 37, 37);
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+
+.recipe-List {
+    display:flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.recipe-key {
+    background: rgba(255, 255, 255, 0.33);
+    margin-top: 15px;
+    margin-bottom:15px;
+}
+
+.recipe-Name {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
