@@ -111,7 +111,10 @@ app.post("/api/addRecipe", async (req, res) => {
     .addRecipe(data)
     .then((result) => {
       res.status(201).json({
-        status: "success"
+        status: "success",
+        data: {
+          recipes: result
+        }
       });
     })
     .catch((err) => {

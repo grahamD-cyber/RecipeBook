@@ -24,11 +24,12 @@ class DropdownButton extends Component {
       }
 
       onClick(event) {
-        this.handleDropdown();
+        this.handleDropdown(event);
         this.handleClick(event);
+        event.preventDefault()
      }
 
-      handleDropdown() {
+      handleDropdown(event) {
         const id = document.getElementById(this.state.dropdownContainer);
         const id2 = document.getElementById(this.state.dropdown);
         const id3 = document.getElementById(this.state.imageId);
@@ -50,23 +51,23 @@ class DropdownButton extends Component {
             id3.classList.add("downArrow");
             id3.classList.remove("downArrowRotate");
         }
-  
+        event.preventDefault();
     }
 
     
   render() {
     let madeArr = Object.entries(this.props.categories)
     let category = madeArr.map(p=>
-        <button id = {this.props.class + p[0]} class = "text-center dropdownButtons" onClick = {this.onClick} >{p[1]}</button>
+        <button id = {this.props.class + p[0]} name= {this.props.class + p[0]} className = "text-center dropdownButtons" onClick = {this.onClick} >{p[1]}</button>
     );
     return (
 
-        <div id = {this.props.dropdownContainer} class = "dropdownContainer-closed">
-            <button id = {this.props.mainButton} class = "text-center mainButton" onClick = {this.handleDropdown}>{this.props.mainText}
-                <img id = {this.props.imageId} class = "downArrow" src = "../images/dropdownIcon.png" alt = "dropdown"/>
-                <img class = "uploadImage" alt = "category" src = {this.props.image}/>
+        <div id = {this.props.dropdownContainer} className = "dropdownContainer-closed">
+            <button id = {this.props.mainButton} className = "text-center mainButton" onClick = {this.handleDropdown}>{this.props.mainText}
+                <img id = {this.props.imageId} className = "downArrow" src = "../images/dropdownIcon.png" alt = "dropdown"/>
+                <img className = "uploadImage" alt = "category" src = {this.props.image}/>
             </button>
-            <div id = {this.props.dropdown} class = "dropdown-closed">
+            <div id = {this.props.dropdown} className = "dropdown-closed">
                 {category}
             </div>
         </div>
