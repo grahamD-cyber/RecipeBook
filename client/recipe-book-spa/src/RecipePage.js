@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {NavLink} from "react-router-dom";
 import { View,Animated, Easing } from 'react-native';
 import RecipeApi from "./services/RecipeApi";
 import "./css/recipeStyles.css";
@@ -84,6 +85,7 @@ class Recipe extends Component {
           const region = "Region: " + recipe.Region;
           const tags = "Tags: " + recipe.Tags;
           const type = "Type: NOT DONE YET ";
+          console.log(recipe.idMeal)
           const youtube = recipe.Youtube + "?rel=0&amp;controls=0&amp;showinfo=0"
           var ingredientNum = recipe.ingredient1;
           var measureNum = recipe.measure1;
@@ -146,6 +148,9 @@ class Recipe extends Component {
                     <span>
                       <h2 className = "widgetText">{tags}</h2>
                     </span>
+                  </div>
+                  <div className = "widgetContainer">
+                    <NavLink to={`/add/${recipe.idMeal}`} className = "text-center editRecipe">Edit Recipe</NavLink>
                   </div>
                 </div> 
               </div>

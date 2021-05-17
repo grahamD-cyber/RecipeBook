@@ -23,6 +23,7 @@ h1 {
 .links {
   color: rgb(58, 58, 58);
   border-bottom: none !important;
+  cursor: pointer;
 }
 
 .links:hover {

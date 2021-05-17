@@ -70,9 +70,15 @@ class Browse extends Component {
       </div>);
     } else {
       const group = items.data.recipes.reduce((r, e) => {
-          const key = e.mealName[0];
-          if (!r[key]) r[key] = [];
-          r[key].push(e);
+          const key1 = e.mealName[0];
+          if (key1 !== undefined)
+          {
+            console.log(key1)
+            var key = key1.toUpperCase();
+            console.log(key)
+            if (!r[key]) r[key] = [];
+            r[key].push(e);
+          }
           return r;
       }, {});
 
@@ -90,12 +96,12 @@ class Browse extends Component {
                 <div className="recipe-Block" key={i}>
                   <div className="recipe-key"><strong>{key}</strong></div>
                   {value.map((item, j) => (
-                  <div className="recipe-Name" key={j}><NavLink className = "links" to={`/recipe/${item.idMeal}`}>{item.mealName}</NavLink></div>
+                  <div className="recipe-Name" key={j}><NavLink to={`/recipe/${item.idMeal}`} className = "links">{item.mealName}</NavLink></div>
                   ))}
                 </div>
               );
             })}
-          </div>
+            </div>
           </div>
         </div>
         </HashRouter>
