@@ -1,5 +1,9 @@
 import React, { Component } from "react";
-import { NavLink, HashRouter } from "react-router-dom";
+import { View,Animated, Easing } from 'react-native';
+import {
+  NavLink,
+  HashRouter
+} from "react-router-dom";
 import RecipeApi from "./services/RecipeApi";
 
 class Browse extends Component {
@@ -7,9 +11,19 @@ class Browse extends Component {
     error: null,
     isLoaded: false,
     items: [],
+    spinAnim: new Animated.Value(0)
   };
 
   componentDidMount() {
+    Animated.loop(Animated.timing(
+      this.state.spinAnim,
+    {
+      toValue: 100,
+      duration: 300000,
+      easing: Easing.linear,
+      useNativeDriver: true
+    }
+  )).start();
     RecipeApi.get("/api/listAllRecipeNames/1").then(
       (result) => {
         this.setState({
@@ -27,42 +41,63 @@ class Browse extends Component {
   }
 
   render() {
+    const spin = this.state.spinAnim.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['0deg', '360deg']
+    });
+    const carrotStyle  = {
+      transform: [{rotate: spin}],
+      position: "absolute",
+      top: "5vw",
+      left: "5vw",
+      right: "5vw",
+      bottom: "5vw",
+      height: "10vw",
+      width: "10vw"
+    }
     const { error, isLoaded, items } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
-      return <div>Loading...</div>;
+      return (
+      <div>
+        <div className = "loadingContainer">
+            <img className = "plate" src = "../images/loadingIcon.png" alt = "background"/>
+            <Animated.Image style={carrotStyle} source = "../images/ingredientIcon3.png" alt = "carrot"/>
+        </div>
+        <h1 className = "text-center loadingText">Awaiting Yumminess</h1>
+
+      </div>);
     } else {
       const group = items.data.recipes.reduce((r, e) => {
-        const key = e.mealName[0].toUpperCase();
-        if (!r[key]) r[key] = [];
-        r[key].push(e);
-        return r;
+          const key = e.mealName[0];
+          if (!r[key]) r[key] = [];
+          r[key].push(e);
+          return r;
       }, {});
 
       return (
         <HashRouter>
+        <div className = "contentContainer">
+          <div className = "spatulaContainer">
+              <img className = "spatula" alt="SpatulaImg" src = "/images/spatulaImage.png"/>
+          </div>
           <div className="recipe-List">
             <div>
-              <h1> Browse All Recipes </h1>
-              {Object.entries(group).map(([key, value], i) => {
-                return (
-                  <div className="recipe-Block" key={i}>
-                    <div className="recipe-key">
-                      <strong>{key}</strong>
-                    </div>
-                    {value.map((item, j) => (
-                      <div className="recipe-Name" key={j}>
-                        <NavLink to={`/recipe/${item.idMeal}`}>
-                          {item.mealName}
-                        </NavLink>
-                      </div>
-                    ))}
-                  </div>
-                );
-              })}
-            </div>
+            <h1> Browse All Recipes </h1>
+            {Object.entries(group).map(([key, value], i) => {
+              return (
+                <div className="recipe-Block" key={i}>
+                  <div className="recipe-key"><strong>{key}</strong></div>
+                  {value.map((item, j) => (
+                  <div className="recipe-Name" key={j}><NavLink className = "links" to={`/recipe/${item.idMeal}`}>{item.mealName}</NavLink></div>
+                  ))}
+                </div>
+              );
+            })}
           </div>
+          </div>
+        </div>
         </HashRouter>
       );
     }

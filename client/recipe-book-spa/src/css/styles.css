@@ -2,7 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Saira+Extra+Condensed:wght@300&display=swap");
 body {
-  background-color: rgb(223, 192, 192) !important;
+  background-color: rgb(229, 160, 160) !important;
 }
 
 .logo {
@@ -30,6 +30,10 @@ nav .header {
   top: 0px;
   width: 50%;
   flex-direction: row;
+}
+
+li {
+  list-style: none;
 }
 
 a {

@@ -17,6 +17,7 @@ class DropdownButton extends Component {
       
       handleClick(event) {
         const id = event.target.id;
+        const id2 = event.target
         var name = document.getElementById(id).innerHTML
         this.props.changeData(name)
         // this.setState({mainText: name});
@@ -58,7 +59,7 @@ class DropdownButton extends Component {
   render() {
     let madeArr = Object.entries(this.props.categories)
     let category = madeArr.map(p=>
-        <button id = {this.props.class + p[0]} name= {this.props.class + p[0]} className = "text-center dropdownButtons" onClick = {this.onClick} >{p[1]}</button>
+        <button id = {this.props.className + p[0]} name= {this.props.class + p[0]} className = "text-center dropdownButtons" onClick = {this.onClick} >{p[1]}</button>
     );
     return (
 

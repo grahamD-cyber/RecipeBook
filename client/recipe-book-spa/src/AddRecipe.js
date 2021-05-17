@@ -103,42 +103,49 @@ class AddRecipe extends Component {
     }
 
     return (
-
-      <div className = "mainAddRecipeContainer">
-        <h1 className = "text-center">Add Recipe.</h1>
-        <form method="POST" onSubmit={this.submitData}>
-        <input name = "mealName" value={this.state.mealName} onChange={this.changeHandler} className = "text-center mainInput" placeholder = "Recipe Name"></input>
-        <div id = "ingredientContainer1" className = "ingredientContainer">
-          <input id = "ingredient1" className = "text-center ingredientInput" placeholder = "Ingredient 1"></input>
-          <span><input id = "measure1" className = "text-center measureInput" placeholder = "Measure/Units"></input></span>
+      <div className = "contentContainer">
+        <div className = "spatulaContainer">
+            <img className = "spatula" alt="SpatulaImg" src = "/images/spatulaImage.png"/>
         </div>
-        <div id = "ingredientContainer2" className = "ingredientContainer">
-          <input id = "ingredient2" className = "text-center ingredientInput" placeholder = "Ingredient 2"></input>
-          <span><input id = "measure2" className = "text-center measureInput" placeholder = "Measure/Units"></input></span>
+        <div className = "mainAddRecipeContainer">
+          <h1 className = "text-center">Add Recipe.</h1>
+          <form method="POST" onSubmit={this.submitData}>
+            <input name = "mealName" required value={this.state.mealName} onChange={this.changeHandler} className = "text-center mainInput" placeholder = "Recipe Name"></input>
+            <div id = "ingredientContainer1" className = "ingredientContainer">
+              <input id = "ingredient1" required className = "text-center ingredientInput" placeholder = "Ingredient 1"></input>
+              <span><input id = "measure1" className = "text-center measureInput" placeholder = "Measure/Units"></input></span>
+            </div>
+            <div id = "ingredientContainer2" className = "ingredientContainer">
+              <input id = "ingredient2" className = "text-center ingredientInput" placeholder = "Ingredient 2"></input>
+              <span><input id = "measure2" className = "text-center measureInput" placeholder = "Measure/Units"></input></span>
+            </div>
+            <div id = "ingredientContainer3" className = "ingredientContainer">
+              <input id = "ingredient3" className = "text-center ingredientInput" placeholder = "Ingredient 3"></input>
+              <span><input id = "measure3" className = "text-center measureInput" placeholder = "Measure/Units"></input></span>
+            </div>
+            <div id = "moreIngredients" className = "moreIngredients"></div>
+            <button type="button" id = "newIngredientButton" className = "newIngredient" onClick={newIngredientClicked}>+ Add Ingredient</button>
+            <textarea name = "Instructions" required value={this.state.Instructions} onChange={this.changeHandler} className = "directionsInput" placeholder = "Preparation Instructions"></textarea>
+            <div className = "mainInput">
+                <input name = "mealThumbnail" value={this.state.mealThumbnail} onChange={this.changeHandler} className = "text-center mainInput urlInput" placeholder = "Enter URL for Recipe Image"></input>
+                <img className = "uploadImage" alt = "upload" src = "../images/photoIcon.png"/>
+            </div>
+            <DropdownButton mainText = {this.state.mainCategory} changeData={this.changeCategory.bind(this)} id = "Category" className = {"category"} dropdown = {"categoryDropdown"} dropdownContainer = {"categoryDropdownContainer"} mainButton={"categoryMain"} categories = {["Appetizers", "Beverages", "Soups","Salads", "Vegetables","Main Dishes","Breads", "Rolls","Desserts", "Sides", "Miscellaneous"]} imageId = "categoryImage" image = {"../images/categoryIcon.png"}/>
+            <DropdownButton mainText = {this.state.mainRegion} changeData={this.changeRegion.bind(this)} id = "Region" className = {"region"} dropdown = {"regionDropdown"} dropdownContainer = {"regionDropdownContainer"} mainButton={"regionMain"} categories = {["Turkish","Italian","Chinese","Jamaican","Dutch","American","Tunisian","Spanish","Japanese","Canadian","Indian","Vietnamese","Portuguese","Moroccan","Unknown","Irish","French","Mexican","Thai","Malaysian","Kenyan","British","Egyptian","Greek","Polish","Russian"]} imageId = "regionImage" image = {"../images/regionIcon.png"}/>
+            <DropdownButton mainText = {this.state.mainType} changeData={this.changeType.bind(this)} id = "Type" className = {"type"} dropdown = {"typeDropdown"} dropdownContainer = {"typeDropdownContainer"} mainButton={"typeMain"} categories = {["Vegetarian", "Non-Vegetarian"]} imageId = "typeImage" image = {"../images/typeIcon.png"}/>
+            <div className = "mainInput">
+                <input name = "Tags" value={this.state.Tags} onChange={this.changeHandler} className = "mainInput tagsInput" placeholder = "Tags e.g.(chicken, pie, carrots, etc.)"></input>
+                <img className = "uploadImage" alt = "tags" src = "../images/tagIcon.png"/>
+            </div>
+            <div className = "mainInput">
+                <input name = "Youtube" value={this.state.Youtube} onChange={this.changeHandler} type = "url" className = "text-center mainInput youtubeInput" placeholder = "YouTube URL"></input>
+                <img className = "uploadImage" alt = "video" src = "../images/videoIcon.png"/>
+            </div>
+            {/* <Tag/> */}
+          
+            <button id = "submitButton" className = "text-center submitButton" type="submit">Submit Recipe</button>
+          </form>
         </div>
-        <div id = "ingredientContainer3" className = "ingredientContainer">
-          <input id = "ingredient3" className = "text-center ingredientInput" placeholder = "Ingredient 3"></input>
-          <span><input id = "measure3" className = "text-center measureInput" placeholder = "Measure/Units"></input></span>
-        </div>
-        <div id = "moreIngredients" className = "moreIngredients"></div>
-        <button id = "newIngredientButton" className = "newIngredient" onClick={newIngredientClicked}>+ Add Ingredient</button>
-        <textarea name = "Instructions" value={this.state.Instructions} onChange={this.changeHandler} className = "directionsInput" placeholder = "Preparation Instructions"></textarea>
-        <div className = "mainInput">
-            <input name = "mealThumbnail" value={this.state.mealName} onChange={this.changeHandler} className = "text-center mainInput urlInput" placeholder = "Enter URL for Recipe Image"></input>
-            <img className = "uploadImage" alt = "upload" src = "../images/photoIcon.png"/>
-        </div>
-        <DropdownButton mainText = {this.state.mainCategory} changeData={this.changeCategory.bind(this)} id = "Category" className = {"category"} dropdown = {"categoryDropdown"} dropdownContainer = {"categoryDropdownContainer"} mainButton={"categoryMain"} categories = {["Appetizers", "Beverages", "Soups","Salads", "Vegetables","Main Dishes","Breads", "Rolls","Desserts", "Sides", "Miscellaneous"]} imageId = "categoryImage" image = {"../images/categoryIcon.png"}/>
-        <DropdownButton mainText = {this.state.mainRegion} changeData={this.changeRegion.bind(this)} id = "Region" className = {"region"} dropdown = {"regionDropdown"} dropdownContainer = {"regionDropdownContainer"} mainButton={"regionMain"} categories = {["Turkish","Italian","Chinese","Jamaican","Dutch","American","Tunisian","Spanish","Japanese","Canadian","Indian","Vietnamese","Portuguese","Moroccan","Unknown","Irish","French","Mexican","Thai","Malaysian","Kenyan","British","Egyptian","Greek","Polish","Russian"]} imageId = "regionImage" image = {"../images/regionIcon.png"}/>
-        <DropdownButton mainText = {this.state.mainType} changeData={this.changeType.bind(this)} id = "Type" className = {"type"} dropdown = {"typeDropdown"} dropdownContainer = {"typeDropdownContainer"} mainButton={"typeMain"} categories = {["Vegetarian", "Non-Vegetarian"]} imageId = "typeImage" image = {"../images/typeIcon.png"}/>
-        <input name = "Tags" value={this.state.Tags} onChange={this.changeHandler} className = "mainInput tagsInput" placeholder = "Tags e.g.(chicken, pie, carrots, etc.)"></input>
-        <div className = "mainInput">
-            <input name = "Youtube" value={this.state.Youtube} onChange={this.changeHandler} type = "url" className = "text-center mainInput youtubeInput" placeholder = "YouTube URL"></input>
-            <img className = "uploadImage" alt = "video" src = "../images/videoIcon.png"/>
-        </div>
-        {/* <Tag/> */}
-       
-        <button id = "submitButton" className = "text-center submitButton" type="submit">Submit Recipe</button>
-        </form>
       </div>
     );
   }

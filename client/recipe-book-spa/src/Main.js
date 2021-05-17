@@ -29,7 +29,7 @@ class Main extends Component {
                 <div className="line2"></div>
                 <div className="line3"></div>
             </div>
-            </nav>
+        </nav>
         <div className="content">
             <Route exact path="/" component={Home}/>
             <Route path="/browse" component={Browse}/>

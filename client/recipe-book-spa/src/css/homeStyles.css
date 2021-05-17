@@ -9,7 +9,6 @@
   right: 0px;
   top: 120px;
   bottom: 0px;
-  display: flex;
 }
 
 .uploadRecipe {
@@ -56,7 +55,7 @@
   right: 0px;
   top: -25px;
   width: 60%;
-  bottom: 80px;
+  bottom: 0px;
   overflow-x: hidden;
 }
 .spatula {
@@ -64,7 +63,8 @@
   object-fit: contain;
   right: 0px;
   height: 100%;
-  opacity: 100% !important;
+  opacity: 20% !important;
+  z-index: -100;
 }
 
 .searchIcon {
@@ -106,7 +106,7 @@
     object-fit: contain;
     right: 0px !important;
     height: 100%;
-    opacity: 75%;
+    opacity: 20%;
   }
   .mainContainer {
     left: 0px !important;

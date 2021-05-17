@@ -6,27 +6,40 @@
 }
 
 h1 {
-    font-family: "Fredericka the Great", cursive;
-    font-size: 40px;
-    color: rgb(37, 37, 37);
-    text-align: center;
-    margin-top: 40px;
-    margin-bottom: 40px;
-  }
+  font-family: "Fredericka the Great", cursive;
+  font-size: 40px;
+  color: rgb(37, 37, 37);
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
 
 .recipe-List {
-    display:flex;
-    justify-content: center;
-    text-align: center;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.links {
+  color: rgb(58, 58, 58);
+  border-bottom: none !important;
+}
+
+.links:hover {
+  color: rgb(118, 118, 118);
+}
+
+.links:active {
+  color: rgb(255, 255, 255);
 }
 
 .recipe-key {
-    background: rgba(255, 255, 255, 0.33);
-    margin-top: 15px;
-    margin-bottom:15px;
+  background: rgba(255, 255, 255, 0.33);
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .recipe-Name {
-    margin-top: 8px;
-    margin-bottom: 8px;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
