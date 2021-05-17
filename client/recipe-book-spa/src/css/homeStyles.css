@@ -57,6 +57,7 @@
   width: 60%;
   bottom: 0px;
   overflow-x: hidden;
+  z-index: -100;
 }
 .spatula {
   position: absolute;
@@ -64,7 +65,6 @@
   right: 0px;
   height: 100%;
   opacity: 20% !important;
-  z-index: -100;
 }
 
 .searchIcon {

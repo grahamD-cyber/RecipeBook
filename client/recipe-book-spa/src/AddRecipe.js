@@ -127,7 +127,7 @@ class AddRecipe extends Component {
             <button type="button" id = "newIngredientButton" className = "newIngredient" onClick={newIngredientClicked}>+ Add Ingredient</button>
             <textarea name = "Instructions" required value={this.state.Instructions} onChange={this.changeHandler} className = "directionsInput" placeholder = "Preparation Instructions"></textarea>
             <div className = "mainInput">
-                <input name = "mealThumbnail" value={this.state.mealThumbnail} onChange={this.changeHandler} className = "text-center mainInput urlInput" placeholder = "Enter URL for Recipe Image"></input>
+                <input name = "mealThumbnail" required value={this.state.mealThumbnail} onChange={this.changeHandler} className = "text-center mainInput urlInput" placeholder = "Enter URL for Recipe Image"></input>
                 <img className = "uploadImage" alt = "upload" src = "../images/photoIcon.png"/>
             </div>
             <DropdownButton mainText = {this.state.mainCategory} changeData={this.changeCategory.bind(this)} id = "Category" className = {"category"} dropdown = {"categoryDropdown"} dropdownContainer = {"categoryDropdownContainer"} mainButton={"categoryMain"} categories = {["Appetizers", "Beverages", "Soups","Salads", "Vegetables","Main Dishes","Breads", "Rolls","Desserts", "Sides", "Miscellaneous"]} imageId = "categoryImage" image = {"../images/categoryIcon.png"}/>
