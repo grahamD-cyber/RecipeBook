@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = window.location.origin;
+const url = 'http://localhost:5000';
 
 export default axios.create({
     baseURL: `${url}`

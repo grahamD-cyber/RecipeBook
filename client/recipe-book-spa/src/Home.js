@@ -5,6 +5,19 @@ import {
 } from "react-router-dom";
 
 class Home extends Component {
+    constructor(props) {
+        super(props);
+        this.setTerm = this.setTerm.bind(this);
+        this.state = {
+          searchTerm: ""
+        };
+      }
+
+    setTerm(event) {
+        console.log(event.target.value)
+        this.setState({ searchTerm: event.target.value });
+        event.preventDefault();
+    }
     render(){
         return(
             <HashRouter>
@@ -16,9 +29,9 @@ class Home extends Component {
                     <h1>Find a New Recipe</h1>
                     <div className = "containSearch">
                         <div className = "searchContainer">
-                            <input className = "searchBox shadow" type="text" placeholder= "Search For a Recipe..."/>
+                            <input className = "searchBox shadow" type="text" onChange={this.setTerm} placeholder= "Search For a Recipe..."/>
                             <button className = "searchButton">
-                                <NavLink to="/search"><img className = "searchIcon" alt="SearchIcon" src = "/images/searchIcon.png"/></NavLink>
+                                <NavLink class = "navLink" to="/search"><img className = "searchIcon" alt="SearchIcon" src = "/images/searchIcon.png"/></NavLink>
                             </button>                        
                         </div>
                     </div>

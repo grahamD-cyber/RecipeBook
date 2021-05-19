@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap");
 * {
-  font-family: "Roboto", sans-serif;
+  font-family: "Saira Extra Condensed", sans-serif;
 }
 
 .contentContainer {
@@ -70,6 +71,16 @@
 .searchIcon {
   height: 25px;
   width: 25px;
+  border-bottom: none !important;
+}
+
+.searchIcon:hover {
+  border-bottom: none !important;
+  opacity: 50% !important;
+}
+
+.searchIcon:focus {
+  border-bottom: none !important;
 }
 
 .searchContainer {
@@ -89,6 +100,11 @@
   border: none;
   text-align: center;
 }
+
+.navLink {
+  border-bottom: none !important;
+}
+
 .searchButton {
   position: absolute;
   border: none;
@@ -98,6 +114,15 @@
   width: 50px;
   z-index: 100;
   background-color: transparent;
+  border-bottom: none !important;
+}
+
+.searchButton:hover {
+  border-bottom: none !important;
+}
+
+.searchButton:focus {
+  border-bottom: none !important;
 }
 
 @media screen and (max-width: 600px) {
