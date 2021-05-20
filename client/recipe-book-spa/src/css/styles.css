@@ -124,7 +124,7 @@ h1 {
   }
 
   a:hover {
-    color: rgb(78, 78, 78);
+    color: rgb(206, 206, 206);
     border-bottom: none;
   }
 
@@ -174,7 +174,7 @@ h1 {
     height: 47px;
     top: 15vh;
     width: 60%;
-    z-index: 200;
+    z-index: -2000;
     opacity: 0;
   }
 
@@ -186,7 +186,7 @@ h1 {
     height: 47px;
     top: 28vh;
     width: 60%;
-    z-index: 200;
+    z-index: -2000;
     opacity: 0;
   }
 

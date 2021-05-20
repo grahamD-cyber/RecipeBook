@@ -149,9 +149,18 @@
   }
 }
 
-@media screen and (max-width: 790px) {
+@media screen and (max-width: 880px) {
   .spatula {
-    left: 0px;
+    left: 10px;
     right: auto;
   }
+}
+
+.errorMessage {
+  position: absolute;
+  top: 40%;
+  left: 5%;
+  right: 5%;
+  font-family: "Fredericka the Great", cursive !important;
+  font-size: 3vw;
 }

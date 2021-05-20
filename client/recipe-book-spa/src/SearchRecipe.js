@@ -1,22 +1,271 @@
 import React, { Component } from "react";
+import { Animated, Easing } from 'react-native';
+import {
+  NavLink,
+  HashRouter,
+  Link
+} from "react-router-dom";
+import RecipeApi from "./services/RecipeApi";
+import "./css/searchStyles.css";
+import DropdownButton from "./DropdownButton.js";
  
 class SearchRecipe extends Component {
-  render() {
-    return (
-      <div>
-        <h2>Search Results</h2>
-        <p>Mauris sem velit, vehicula eget sodales vitae,
-        rhoncus eget sapien:</p>
-        <ol>
-          <li>Nulla pulvinar diam</li>
-          <li>Facilisis bibendum</li>
-          <li>Vestibulum vulputate</li>
-          <li>Eget erat</li>
-          <li>Id porttitor</li>
-        </ol>
-      </div>
+  constructor(props) {
+    super(props);
+    this.changeSearchCategory = this.changeSearchCategory.bind(this);
+    this.changeSearchRegion = this.changeSearchRegion.bind(this);
+    this.changeSearchType = this.changeSearchType.bind(this);
+    this.cancelFilter = this.cancelFilter.bind(this);
+    this.handleCancelFilter = this.handleCancelFilter.bind(this);
+    this.handleFilter = this.handleFilter.bind(this);
+    this.startFilter = this.startFilter.bind(this);
+    this.state = {
+      mealName: "",
+      Instructions: "",
+      mealThumbnail: "",
+      Tags: "",
+      Youtube: "",
+      mainCategory: "Choose a Category",
+      mainRegion: "Choose a Region",
+      mainType: "Choose a Type",
+      error: null,
+      isLoaded: false,
+      items: [],
+      term: "",
+      dropdownDiv: "dropdownDiv",
+      stopFilter: "stopFilter",
+      filterDiv: "filterDiv",   
+      finishedFilter: "finishedFilter",
+      clearFilter: "clearFilter",
+      spinAnim: new Animated.Value(0)
+    };
+  }
+
+  handleCancelFilter(event)
+  {
+    this.setState({
+      dropdownDiv: "dropdownDiv",
+      stopFilter: "stopFilter",
+      filterDiv: "filterDiv",   
+      finishedFilter: "finishedFilter",
+      clearFilter: "clearFilter"
+    });
+    console.log("X pressed")
+    event.preventDefault();
+  }
+
+  cancelFilter(event)
+  {
+    this.setState({
+      dropdownDiv: "dropdownDiv",
+      stopFilter: "stopFilter",
+      filterDiv: "filterDiv",   
+      finishedFilter: "finishedFilter",
+      clearFilter: "clearFilter",
+      mainCategory: "Choose a Category",
+      mainRegion: "Choose a Region",
+      mainType: "Choose a Type"
+    });
+    console.log("Cancel pressed")
+    event.preventDefault();
+  }
+
+  handleFilter(event)
+  {
+    this.setState({
+      dropdownDiv: "dropdownDiv",
+      stopFilter: "stopFilter",
+      filterDiv: "filterDiv",   
+      finishedFilter: "finishedFilter",
+      clearFilter: "clearFilter"
+    });
+    const category = this.state.mainCategory
+    const region = this.state.mainRegion
+    const type = this.state.mainType
+  
+    let madeArr = this.state.items.data.recipes
+    if (category !== "Choose a Category")
+    {
+      console.log("category is not Choose a category")
+      madeArr = madeArr.filter(function(item) {
+        return item.Category === category
+      })
+    }
+    if (region !== "Choose a Region")
+    {
+      console.log("region is not Choose a region")
+      madeArr = madeArr.filter(function(item) {
+        return item.Region === region
+      })
+    }
+    if (type !== "Choose a Type")
+    {
+      console.log("type is not Choose a Type")
+      madeArr = madeArr.filter(function(item) {
+        return item.Type === type
+      })
+    }
+    let newItems = this.state.items
+    newItems.data.recipes = madeArr
+    this.setState({items: newItems});
+    event.preventDefault();
+    
+  }
+
+
+
+  startFilter(event) 
+  {
+    this.setState({
+      dropdownDiv: "dropdownDivActive",
+      stopFilter: "stopFilterActive",
+      filterDiv: "filterDivActive",   
+      finishedFilter: "finishedFilterActive",
+      clearFilter: "clearFilterActive"
+    });
+    event.preventDefault();
+  }
+
+  changeSearchCategory(newValue) {
+    this.setState({ mainCategory: newValue });
+  }
+
+  changeSearchType(newValue) {
+    this.setState({ mainType: newValue });
+  }
+
+  changeSearchRegion(newValue) {
+    this.setState({ mainRegion: newValue });
+  }
+
+  componentDidMount() {
+    Animated.loop(Animated.timing(
+      this.state.spinAnim,
+    {
+      toValue: 100,
+      duration: 300000,
+      easing: Easing.linear,
+      useNativeDriver: true
+    }
+  )).start();
+    var url = window.location.hash;
+    url = url.replace("#/search?", "");
+    while (url.includes("%20"))
+    {
+      url = url.replace("%20", " ")
+    }
+
+    const searchString = "/api/searchRecipeByName/" + url
+    RecipeApi.get(searchString).then(
+      (result) => {
+        const data = result.data;
+        this.setState({
+          isLoaded: true,
+          items: data,
+          term: url
+        });
+        
+      },
+      (error) => {
+        this.setState({
+          isLoaded: true,
+          error,
+        });
+      }  
     );
+    
+  }
+
+  render() {
+
+    const spin = this.state.spinAnim.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['0deg', '360deg']
+    });
+    const carrotStyle  = {
+      transform: [{rotate: spin}],
+      position: "absolute",
+      top: "5vw",
+      left: "5vw",
+      right: "5vw",
+      bottom: "5vw",
+      height: "10vw",
+      width: "10vw"
+    }
+    var { error, isLoaded, items } = this.state;
+    if (error) {
+      return <div className = "text-center errorMessage">Error: {error.message}</div>;
+    } else if (!isLoaded) {
+      return (
+      <div>
+        <div className = "loadingContainer">
+            <img className = "plate" src = "../images/loadingIcon.png" alt = "background"/>
+            <Animated.Image style={carrotStyle} source = "../images/ingredientIcon3.png" alt = "carrot"/>
+        </div>
+        <h1 className = "text-center loadingText">Awaiting Yumminess</h1>
+
+      </div>);
+    } else {
+      let madeArr = Object.entries(items.data.recipes)
+      var recipeIcons = <div className = "noRecipeContainer"><img className = "noRecipeIcon" src = "./images/logo.png" alt = "icon"/><div className = "text-center noRecipe">No Recipe Found.</div></div>
+    
+      if (this.state.items.data.recipes.length !== 0)
+      {
+        recipeIcons = madeArr.map((item) => (
+          <NavLink to={`/recipe/${item[1].idMeal}`} className = "recipeBox">
+            <div className = "recipeImageHolder">
+              <img className = "recipeSearchImage" alt = "recipe" src = {item[1].mealThumbnail}/>
+            </div>
+            <div className = "recipeSearchText">{item[1].mealName}</div>
+          </NavLink>
+        ));
+      }
+
+      return (
+        <HashRouter>
+        <div className = "contentContainer">
+          <div className = "spatulaContainer">
+              <img className = "spatula" alt="SpatulaImg" src = "/images/spatulaImage.png"/>
+          </div>
+          <div className = {this.state.filterDiv}>
+            <button onClick = {this.handleCancelFilter} className = {this.state.stopFilter}>
+              <div className = "xLine1"></div>
+              <div className = "xLine2"></div>
+            </button>
+            <div className = {this.state.dropdownDiv}>
+              <DropdownButton mainText = {this.state.mainCategory} changeData={this.changeSearchCategory.bind(this)} id = "Category" className = {"category"} dropdown = {"categoryDropdown"} dropdownContainer = {"categoryDropdownContainer"} mainButton={"categoryMain"} categories = {["Choose a Category", "Appetizers", "Beverages", "Soups","Salads", "Vegetables","Main Dishes","Breads", "Rolls","Desserts", "Sides", "Miscellaneous"]} imageId = "categoryImage" image = {"../images/categoryIcon.png"}/>
+            </div>
+            <div className = {this.state.dropdownDiv}>
+              <DropdownButton mainText = {this.state.mainRegion} changeData={this.changeSearchRegion.bind(this)} id = "Region" className = {"region"} dropdown = {"regionDropdown"} dropdownContainer = {"regionDropdownContainer"} mainButton={"regionMain"} categories = {["Choose a Region", "Turkish","Italian","Chinese","Jamaican","Dutch","American","Tunisian","Spanish","Japanese","Canadian","Indian","Vietnamese","Portuguese","Moroccan","Unknown","Irish","French","Mexican","Thai","Malaysian","Kenyan","British","Egyptian","Greek","Polish","Russian"]} imageId = "regionImage" image = {"../images/regionIcon.png"}/>
+            </div>
+            <div className = {this.state.dropdownDiv}>
+              <DropdownButton mainText = {this.state.mainType} changeData={this.changeSearchType.bind(this)} id = "Type" className = {"type"} dropdown = {"typeDropdown"} dropdownContainer = {"typeDropdownContainer"} mainButton={"typeMain"} categories = {["Choose a Type", "Vegetarian", "Non-Vegetarian"]} imageId = "typeImage" image = {"../images/typeIcon.png"}/>
+            </div>
+            <div className = {this.state.dropdownDiv}>
+              <button className = {this.state.finishedFilter} onClick = {this.handleFilter}><img className = "filterIcon2" alt = "filter" src = "../images/filterIconWhite.png"/>Apply Filter</button>
+            </div>
+            <div className = {this.state.dropdownDiv}>
+              <button className = {this.state.clearFilter} onClick = {this.cancelFilter}>Clear Filters</button>
+            </div>
+          </div>
+          <div className = "searchHeader">
+            <h1 className = "searchHeaderText">Search Results for "{this.state.term}"</h1>
+            <div className = "filters">
+              <button className = "filterButton" onClick = {this.startFilter}>
+                <img className = "filterIcon" alt = "filter" src = "../images/filterIcon.png"/>
+                Filter
+              </button>
+            </div>
+            <div className = "mainSearchContainer">
+              {recipeIcons}
+            </div>
+          </div>
+        </div>
+        </HashRouter>
+
+      );
+    }
   }
 }
- 
+
 export default SearchRecipe;

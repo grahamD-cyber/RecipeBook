@@ -4,6 +4,7 @@ import {
   NavLink,
   HashRouter
 } from "react-router-dom";
+
 import RecipeApi from "./services/RecipeApi";
 
 class Browse extends Component {
@@ -57,7 +58,7 @@ class Browse extends Component {
     }
     const { error, isLoaded, items } = this.state;
     if (error) {
-      return <div>Error: {error.message}</div>;
+      return <div class = "text-center errorMessage">Error: {error.message}</div>;
     } else if (!isLoaded) {
       return (
       <div>

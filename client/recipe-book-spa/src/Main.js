@@ -15,6 +15,7 @@ class Main extends Component {
     constructor(props) {
         super(props);
         this.handleNav = this.handleNav.bind(this);
+        this.handleNavClick = this.handleNavClick.bind(this);
         this.state = {
             backgroundClass: "background",
             browseClass: "browseButton",
@@ -50,6 +51,21 @@ class Main extends Component {
         }
 
     }
+
+    handleNavClick() {
+        if (this.state.backgroundClass === "backgroundActive")
+        {
+            this.setState ({
+                backgroundClass: "background",
+                browseClass: "browseButton",
+                homeClass: "homeButton",
+                line1: "line1",
+                line2: "line2",
+                line3: "line3"
+            });
+        }
+    }
+
     render() {
     return (
         <HashRouter>
@@ -58,9 +74,9 @@ class Main extends Component {
             <NavLink exact to="/"><img className = "logo" src = "/images/logo.png" alt="logoImg"/></NavLink>
             <div className = "linkContainer">
                 <ul className="header">
-                    <li className = {this.state.browseClass}><NavLink to= "/browse">Browse</NavLink></li>
-                    <li className = {this.state.homeClass} ><NavLink exact to= "/">Home</NavLink></li>
-                </ul>
+                    <li className = {this.state.browseClass}><NavLink onClick = {this.handleNavClick} to= "/browse">Browse</NavLink></li>
+                    <li className = {this.state.homeClass} ><NavLink  onClick = {this.handleNavClick} exact to= "/">Home</NavLink></li>
+                </ul> 
             </div>
             <button className="burger" onClick = {this.handleNav}>
                 <div className={this.state.line1}></div>
