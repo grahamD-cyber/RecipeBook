@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./css/addStyles.css";
 import DropdownButton from "./DropdownButton.js";
 import RecipeApi from "./services/RecipeApi";
-import { View,Animated, Easing } from 'react-native';
+import {Animated, Easing } from 'react-native';
 
 class EditRecipe extends Component {
   constructor(props) {
@@ -152,12 +152,12 @@ class EditRecipe extends Component {
     console.log(test)
 
     RecipeApi.put(`/api/updateRecipe/${this.state.id}`, recipeData).then((response) => {
-      if (response && response.data && Array.isArray(response.data.data.recipes) && response.data.data.recipes[0].idMeal) {
-        var id = response.data.data.recipes[0].idMeal;
-        // Redirect to Page that displays newly created Recipe
-        console.log("LKJSDFLKJDSFLKJSDFLKJSDFLKJSDFLKJSDFLKJSD")
-        this.props.history.push(`/recipe/${id}`)
-      }
+    //   if (response && response.data && Array.isArray(response.data.data.recipes) && response.data.data.recipes[0].idMeal) {
+    //     // var id = response.data.data.recipes[0].idMeal;
+    //     // Redirect to Page that displays newly created Recipe
+    //     console.log("LKJSDFLKJDSFLKJSDFLKJSDFLKJSDFLKJSDFLKJSD")
+        this.props.history.push(`/recipe/${this.state.id}`)
+
     });
   };
 

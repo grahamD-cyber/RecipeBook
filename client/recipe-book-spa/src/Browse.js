@@ -74,9 +74,7 @@ class Browse extends Component {
           const key1 = e.mealName[0];
           if (key1 !== undefined)
           {
-            console.log(key1)
             var key = key1.toUpperCase();
-            console.log(key)
             if (!r[key]) r[key] = [];
             r[key].push(e);
           }

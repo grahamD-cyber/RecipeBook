@@ -6,7 +6,7 @@
 }
 
 h1 {
-  font-family: 'SAIRA EXTRA CONDENSED';
+  font-family: "SAIRA EXTRA CONDENSED";
   font-size: 40px;
   color: rgb(37, 37, 37);
   text-align: center;
@@ -38,6 +38,7 @@ h1 {
   background: rgba(255, 255, 255, 0.33);
   margin-top: 15px;
   margin-bottom: 15px;
+  margin: 20px;
 }
 
 .recipe-Name {

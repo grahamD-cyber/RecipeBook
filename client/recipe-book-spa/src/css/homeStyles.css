@@ -41,7 +41,7 @@
 .mainContainer {
   position: absolute;
   bottom: 0px;
-  top: 90px;
+  top: 12vh;
   left: 50px;
   right: 50px;
 }
@@ -59,6 +59,7 @@
   bottom: 0px;
   overflow-x: hidden;
   z-index: -100;
+  max-height: 720px;
 }
 .spatula {
   position: absolute;
@@ -125,6 +126,16 @@
   border-bottom: none !important;
 }
 
+@media screen and (max-width: 1024px) {
+  .searchContainer {
+    width: 80%;
+    left: 10%;
+  }
+  .mainContainer {
+    top: 20vh;
+  }
+}
+
 @media screen and (max-width: 600px) {
   .spatula {
     position: relative;
@@ -134,6 +145,7 @@
     opacity: 20%;
   }
   .mainContainer {
+    top: 10vh !important;
     left: 0px !important;
     right: 0px !important;
   }
@@ -142,10 +154,13 @@
     left: 2% !important;
   }
 }
-@media screen and (max-width: 735px) {
+@media screen and (max-width: 768px) {
   .searchContainer {
     width: 75%;
     left: 12.5%;
+  }
+  .mainContainer {
+    top: 20vh;
   }
 }
 

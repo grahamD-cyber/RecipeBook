@@ -17,7 +17,7 @@ class DropdownButton extends Component {
       
       handleClick(event) {
         const id = event.target.id;
-        const id2 = event.target
+        // const id2 = event.target
         var name = document.getElementById(id).innerHTML
         this.props.changeData(name)
         // this.setState({mainText: name});
