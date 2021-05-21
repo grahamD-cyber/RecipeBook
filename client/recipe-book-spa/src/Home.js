@@ -46,7 +46,7 @@ class Home extends Component {
                         <div className = "searchContainer">
                             <input onKeyDown={this.onKeyDown} className = "searchBox shadow" type="text" onChange={this.setTerm} placeholder= "Search For a Recipe..."/>
                             <button className = "searchButton">
-                                <NavLink id = "submit" class = "navLink" to={`/search?${this.state.searchTerm}`}><img className = "searchIcon" alt="SearchIcon" src = "/images/searchIcon.png"/></NavLink>
+                                <NavLink id = "submit" class = "navLink" to={`/search/${this.state.searchTerm}`}><img className = "searchIcon" alt="SearchIcon" src = "/images/searchIcon.png"/></NavLink>
                             </button>                
                         </div>
                     </div>

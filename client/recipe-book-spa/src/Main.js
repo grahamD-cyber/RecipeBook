@@ -88,7 +88,7 @@ class Main extends Component {
             <Route exact path="/" component={Home}/>
             <Route path="/browse" component={Browse}/>
             <Route path="/add" component={AddRecipe}/>
-            <Route path="/search" component={SearchRecipe}/>
+            <Route path="/search/:recipeName" component={SearchRecipe}/>
             <Route path="/recipe/:recipeId" component={RecipePage}/>
         </div>
         </HashRouter>

@@ -31,6 +31,7 @@ class SearchRecipe extends Component {
       error: null,
       isLoaded: false,
       items: [],
+      recipes: [],
       term: "",
       dropdownDiv: "dropdownDiv",
       stopFilter: "stopFilter",
@@ -64,9 +65,9 @@ class SearchRecipe extends Component {
       clearFilter: "clearFilter",
       mainCategory: "Choose a Category",
       mainRegion: "Choose a Region",
-      mainType: "Choose a Type"
+      mainType: "Choose a Type",
+      items: this.state.recipes
     });
-    console.log("Cancel pressed")
     event.preventDefault();
   }
 
@@ -83,31 +84,35 @@ class SearchRecipe extends Component {
     const region = this.state.mainRegion
     const type = this.state.mainType
   
-    let madeArr = this.state.items.data.recipes
+    let recipeArray = this.state.recipes.data.recipes
+    var filteredArray = recipeArray
     if (category !== "Choose a Category")
     {
       console.log("category is not Choose a category")
-      madeArr = madeArr.filter(function(item) {
+      filteredArray = filteredArray.filter(function(item) {
         return item.Category === category
       })
     }
     if (region !== "Choose a Region")
     {
       console.log("region is not Choose a region")
-      madeArr = madeArr.filter(function(item) {
+      filteredArray = filteredArray.filter(function(item) {
         return item.Region === region
       })
     }
     if (type !== "Choose a Type")
     {
       console.log("type is not Choose a Type")
-      madeArr = madeArr.filter(function(item) {
+      filteredArray = filteredArray.filter(function(item) {
         return item.Type === type
       })
     }
-    let newItems = this.state.items
-    newItems.data.recipes = madeArr
-    this.setState({items: newItems});
+    let filteredItems = {
+      data: {
+        recipes: filteredArray
+      }
+    }
+    this.setState({items: filteredItems});
     event.preventDefault();
     
   }
@@ -148,21 +153,17 @@ class SearchRecipe extends Component {
       useNativeDriver: true
     }
   )).start();
-    var url = window.location.hash;
-    url = url.replace("#/search?", "");
-    while (url.includes("%20"))
-    {
-      url = url.replace("%20", " ")
-    }
+    var keyword = this.props.match.params.recipeName;
 
-    const searchString = "/api/searchRecipeByName/" + url
+    const searchString = "/api/searchRecipeByName/" + keyword
     RecipeApi.get(searchString).then(
       (result) => {
         const data = result.data;
         this.setState({
           isLoaded: true,
           items: data,
-          term: url
+          term: keyword,
+          recipes: data
         });
         
       },
