@@ -10,6 +10,7 @@ import Browse from "./Browse";
 import AddRecipe from "./AddRecipe"
 import SearchRecipe from "./SearchRecipe"
 import RecipePage from "./RecipePage"
+import EditRecipe from "./EditRecipe"
  
 class Main extends Component {
     constructor(props) {
@@ -90,6 +91,7 @@ class Main extends Component {
             <Route path="/add" component={AddRecipe}/>
             <Route path="/search" component={SearchRecipe}/>
             <Route path="/recipe/:recipeId" component={RecipePage}/>
+            <Route path="/edit/:recipeId" component={EditRecipe}/>
         </div>
         </HashRouter>
     );

@@ -83,9 +83,12 @@ class Recipe extends Component {
           var recipe = items.data.recipes[0];
           const category = "Category: " + recipe.Category;
           const region = "Region: " + recipe.Region;
-          const tags = "Tags: " + recipe.Tags;
-          const type = "Type: NOT DONE YET ";
-          console.log(recipe.idMeal)
+          if (recipe.Tags !== null)
+          {
+            var newTags = recipe.Tags.replaceAll(",", ", ")
+          }
+          const tags = "Tags: " + newTags;
+          const type = "Type: " + recipe.Type;
           const youtube = recipe.Youtube + "?rel=0&amp;controls=0&amp;showinfo=0"
           var ingredientNum = recipe.ingredient1;
           var measureNum = recipe.measure1;
@@ -150,7 +153,7 @@ class Recipe extends Component {
                     </span>
                   </div>
                   <div className = "widgetContainer">
-                    <NavLink to={`/add/${recipe.idMeal}`} className = "text-center editRecipe">Edit Recipe</NavLink>
+                    <NavLink to={`/edit/${recipe.idMeal}`} className = "text-center editRecipe">Edit Recipe</NavLink>
                   </div>
                 </div> 
               </div>

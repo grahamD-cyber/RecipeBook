@@ -134,7 +134,7 @@ app.put("/api/updateRecipe/:id", async (req, res) => {
     });
   } else {
     services
-      .updateRecipe(id)
+      .updateRecipe(id, data)
       .then((result) => {
         res.status(200).json({
           status: "success"
