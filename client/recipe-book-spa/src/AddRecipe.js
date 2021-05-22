@@ -21,9 +21,11 @@ class AddRecipe extends Component {
       mainRegion: "Choose a Region",
       mainType: "Choose a Type",
       ingredientBlocks: [4],
-      numRecipes: 4,
+      numIngredients: 4,
       finalBlocks: [],
-      newIngredientButton: "newIngredient"
+      newIngredientButton: "newIngredient",
+      ingredients: {},
+      measures: {}
     };
   }
 
@@ -32,6 +34,22 @@ class AddRecipe extends Component {
     let val = event.target.value;
     this.setState({ [nam]: val });
   };
+
+  ingredientsChangeHandler = (event) => {
+    let nam = event.target.name;
+    let val = event.target.value;
+    var ingredientObj = this.state.ingredients
+    ingredientObj[nam] = val
+    this.setState({ingredients: ingredientObj})
+  }
+
+  measuresChangeHandler = (event) => {
+    let nam = event.target.name;
+    let val = event.target.value;
+    var measuresObj = this.state.measures
+    measuresObj[nam] = val
+    this.setState({measures: measuresObj})
+  }
 
   changeCategory(newValue) {
     this.setState({ mainCategory: newValue });
@@ -47,35 +65,35 @@ class AddRecipe extends Component {
 
   newIngredient(event)
   {
-    if (this.state.numRecipes <= 20)
+    if (this.state.numIngredients <= 20)
     {
       
       // this.setState({ ingredientBlocks: this.state.ingredientBlocks.push(this.state.numRecipes)})
       const slides = this.state.ingredientBlocks.map((item) => {
         return (
           <div id = {`ingredientContainer${item}`} className = "ingredientContainer">
-              <input id = {`ingredient${item}`} required className = "text-center ingredientInput" placeholder = {`Ingredient ${item}`}></input>
-              <span><input id = {`measure${item}`} className = "text-center measureInput" placeholder = "Measure/Units"></input></span>
+              <input name = {`ingredient${item}`} value = {this.state.ingredients[`ingredient"${item}`]} onChange={this.ingredientsChangeHandler} className = "text-center ingredientInput" placeholder = {`Ingredient ${item}`}></input>
+              <span><input name = {`measure${item}`} value = {this.state.measures[`measure"${item}`]} onChange={this.measuresChangeHandler} className = "text-center measureInput" placeholder = "Measure/Units"></input></span>
           </div>
         );
       });
-      if (this.state.numRecipes === 4){
-        const newNum = this.state.numRecipes + 1
+      if (this.state.numIngredients === 4){
+        const newNum = this.state.numIngredients + 1
         this.setState({
-        numRecipes: newNum,
+        numIngredients: newNum,
         ingredientBlocks: [newNum],
         finalBlocks: slides});
       }
       else
       {
-        const newNum = this.state.numRecipes + 1
+        const newNum = this.state.numIngredients + 1
         var newBlocks = this.state.finalBlocks
         newBlocks = newBlocks.concat(slides)
         this.setState({
-        numRecipes: newNum,
+        numIngredients: newNum,
         ingredientBlocks: [newNum],
         finalBlocks: newBlocks});
-        if (this.state.numRecipes === 20)
+        if (this.state.numIngredients === 20)
         {
           this.setState({newIngredientButton: "newIngredientGone"})
         }
@@ -85,15 +103,15 @@ class AddRecipe extends Component {
     event.preventDefault();
   }
 
-  getIngredientsOrMeasure(recipeData, fieldName) {
+  getIngredientsOrMeasure(recipeData, parentArray, fieldName) {
     for (var i = 1; i <= 20; i++) {
-      const id = fieldName + i;
-      if (document.getElementById(id) != null) {
+      const fullFieldName = fieldName + i;
+      if (parentArray[fullFieldName] != null) {
         // if ingredient value present add to recipe Object
-        recipeData[id] = document.getElementById(id).value;
+        recipeData[fullFieldName] = parentArray[fullFieldName]
       } else {
         // if no ingredient value present set as blank
-        recipeData[id] = "";
+        recipeData[fullFieldName] = "";
       }
     }
   }
@@ -103,8 +121,8 @@ class AddRecipe extends Component {
 
     var recipeData = {};
     recipeData.mealName = this.state.mealName ? this.state.mealName : "";
-    this.getIngredientsOrMeasure(recipeData, "ingredient");
-    this.getIngredientsOrMeasure(recipeData, "measure");
+    this.getIngredientsOrMeasure(recipeData, this.state.ingredients, "ingredient");
+    this.getIngredientsOrMeasure(recipeData, this.state.measures, "measure");
     recipeData.mealThumbnail = this.state.mealThumbnail ? this.state.mealThumbnail : "";
     recipeData.Instructions = this.state.Instructions ? this.state.Instructions : "";
     recipeData.Tags = this.state.Tags ? this.state.Tags : "";
@@ -123,29 +141,6 @@ class AddRecipe extends Component {
   };
 
   render() {
-    // var numIngredients = 4;
-
-    // function newIngredientClicked() {
-    //   if (numIngredients <= 20) {
-    //     const div = document.createElement("div");
-    //     div.classList.add("ingredientContainer");
-    //     var num = String(numIngredients);
-    //     div.innerHTML = `<input id = "ingredient${num}" class = "text-center ingredientInput" placeholder = "Ingredient ${num}"></input>
-    //     <span><input id = "measure${num}" class = "text-center measureInput" placeholder = "Measure/Units"></input></span>`;
-    //     document.querySelector(".moreIngredients").appendChild(div);
-    //     numIngredients = numIngredients + 1;
-    //   } else {
-    //     const div = document.createElement("div");
-    //     document
-    //       .getElementById("newIngredientButton")
-    //       .classList.add("newIngredientGone");
-    //     document
-    //       .getElementById("newIngredientButton")
-    //       .classList.remove("newIngredient");
-    //     div.innerHTML = `<h2 class = "text-center">Only 20 Ingredients Allowed.</h2>`;
-    //     document.querySelector(".moreIngredients").appendChild(div);
-    //   }
-    // }
 
     return (
       <div className = "contentContainer">
@@ -155,18 +150,18 @@ class AddRecipe extends Component {
         <div className = "mainAddRecipeContainer">
           <h1 className = "text-center">Add Recipe.</h1>
           <form method="POST" onSubmit={this.submitData}>
-            <input name = "mealName" required value={this.state.mealName} onChange={this.changeHandler} className = "text-center mainInput" placeholder = "Recipe Name"></input>
+            <input name = "mealName"  required value={this.state.mealName} onChange={this.changeHandler} className = "text-center mainInput" placeholder = "Recipe Name"></input>
             <div id = "ingredientContainer1" className = "ingredientContainer">
-              <input id = "ingredient1" required className = "text-center ingredientInput" placeholder = "Ingredient 1"></input>
-              <span><input id = "measure1" className = "text-center measureInput" placeholder = "Measure/Units"></input></span>
+              <input name = "ingredient1" required value={this.state.ingredients[`ingredient1`]} onChange={this.ingredientsChangeHandler} className = "text-center ingredientInput" placeholder = "Ingredient 1"></input>
+              <span><input name = "measure1" value={this.state.measures[`measure1`]} onChange={this.measuresChangeHandler} className = "text-center measureInput" placeholder = "Measure/Units"></input></span>
             </div>
             <div id = "ingredientContainer2" className = "ingredientContainer">
-              <input id = "ingredient2" className = "text-center ingredientInput" placeholder = "Ingredient 2"></input>
-              <span><input id = "measure2" className = "text-center measureInput" placeholder = "Measure/Units"></input></span>
+              <input name = "ingredient2" value = {this.state.ingredients[`ingredient2`]} onChange={this.ingredientsChangeHandler} className = "text-center ingredientInput" placeholder = "Ingredient 2"></input>
+              <span><input name = "measure2" value = {this.state.measures[`measure2`]} onChange={this.measuresChangeHandler} className = "text-center measureInput" placeholder = "Measure/Units"></input></span>
             </div>
             <div id = "ingredientContainer3" className = "ingredientContainer">
-              <input id = "ingredient3" className = "text-center ingredientInput" placeholder = "Ingredient 3"></input>
-              <span><input id = "measure3" className = "text-center measureInput" placeholder = "Measure/Units"></input></span>
+              <input name = "ingredient3" value = {this.state.ingredients[`ingredient3`]} onChange={this.ingredientsChangeHandler} className = "text-center ingredientInput" placeholder = "Ingredient 3"></input>
+              <span><input name = "measure3" value = {this.state.measures[`measure3`]} onChange={this.measuresChangeHandler} className = "text-center measureInput" placeholder = "Measure/Units"></input></span>
             </div>
             {this.state.finalBlocks}
             <div id = "moreIngredients" className = "moreIngredients"></div>

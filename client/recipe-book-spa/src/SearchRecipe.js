@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import { Animated, Easing } from 'react-native';
-// import { MDBCard, MDBCardImage, MDBCardBody, MDBCardTitle, MDBCardText, MDBRow, MDBCol } from 'mdb-react-ui-kit';
-import { MDBCard, MDBCardTitle, MDBBtn, MDBCardGroup, MDBCardImage, MDBCardText, MDBCardBody } from "mdbreact";
 import {
   NavLink,
-  HashRouter,
-  Link
+  HashRouter
 } from "react-router-dom";
 import RecipeApi from "./services/RecipeApi";
 import "./css/searchStyles.css";
