@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactDOM from 'react-dom';
 import "./css/addStyles.css"; 
 
 class DropdownButton extends Component {
@@ -14,7 +15,15 @@ class DropdownButton extends Component {
             imageId: this.props.imageId
         }
       }
-      
+
+    //   componentDidMount() {
+    //     document.addEventListener('click', this.handleClickOutside, true);
+    //     }
+
+    //     componentWillUnmount() {
+    //         document.removeEventListener('click', this.handleClickOutside, true);
+    //     }
+
       handleClick(event) {
         const id = event.target.id;
         // const id2 = event.target
@@ -23,6 +32,16 @@ class DropdownButton extends Component {
         // this.setState({mainText: name});
 
       }
+
+    //   handleClickOutside = event => {
+    //     const domNode = ReactDOM.findDOMNode(this);
+    
+    //     if (!domNode || !domNode.contains(event.target)) {
+    //         console.log("lkjsdflkjs")
+    //         this.handleDropdown(event)
+    //         event.preventDefault();
+    //     }
+    // }
 
       onClick(event) {
         this.handleDropdown(event);

@@ -6,6 +6,7 @@ import RecipeApi from "./services/RecipeApi";
 class AddRecipe extends Component {
   constructor(props) {
     super(props);
+    this.newIngredient = this.newIngredient.bind(this);
     this.submitData = this.submitData.bind(this);
     this.changeCategory = this.changeCategory.bind(this);
     this.changeRegion = this.changeRegion.bind(this);
@@ -19,6 +20,10 @@ class AddRecipe extends Component {
       mainCategory: "Choose a Category",
       mainRegion: "Choose a Region",
       mainType: "Choose a Type",
+      ingredientBlocks: [4],
+      numRecipes: 4,
+      finalBlocks: [],
+      newIngredientButton: "newIngredient"
     };
   }
 
@@ -38,6 +43,46 @@ class AddRecipe extends Component {
 
   changeRegion(newValue) {
     this.setState({ mainRegion: newValue });
+  }
+
+  newIngredient(event)
+  {
+    if (this.state.numRecipes <= 20)
+    {
+      
+      // this.setState({ ingredientBlocks: this.state.ingredientBlocks.push(this.state.numRecipes)})
+      const slides = this.state.ingredientBlocks.map((item) => {
+        return (
+          <div id = {`ingredientContainer${item}`} className = "ingredientContainer">
+              <input id = {`ingredient${item}`} required className = "text-center ingredientInput" placeholder = {`Ingredient ${item}`}></input>
+              <span><input id = {`measure${item}`} className = "text-center measureInput" placeholder = "Measure/Units"></input></span>
+          </div>
+        );
+      });
+      if (this.state.numRecipes === 4){
+        const newNum = this.state.numRecipes + 1
+        this.setState({
+        numRecipes: newNum,
+        ingredientBlocks: [newNum],
+        finalBlocks: slides});
+      }
+      else
+      {
+        const newNum = this.state.numRecipes + 1
+        var newBlocks = this.state.finalBlocks
+        newBlocks = newBlocks.concat(slides)
+        this.setState({
+        numRecipes: newNum,
+        ingredientBlocks: [newNum],
+        finalBlocks: newBlocks});
+        if (this.state.numRecipes === 20)
+        {
+          this.setState({newIngredientButton: "newIngredientGone"})
+        }
+      }
+
+    } 
+    event.preventDefault();
   }
 
   getIngredientsOrMeasure(recipeData, fieldName) {
@@ -78,29 +123,29 @@ class AddRecipe extends Component {
   };
 
   render() {
-    var numIngredients = 4;
+    // var numIngredients = 4;
 
-    function newIngredientClicked() {
-      if (numIngredients <= 20) {
-        const div = document.createElement("div");
-        div.classList.add("ingredientContainer");
-        var num = String(numIngredients);
-        div.innerHTML = `<input id = "ingredient${num}" class = "text-center ingredientInput" placeholder = "Ingredient ${num}"></input>
-        <span><input id = "measure${num}" class = "text-center measureInput" placeholder = "Measure/Units"></input></span>`;
-        document.querySelector(".moreIngredients").appendChild(div);
-        numIngredients = numIngredients + 1;
-      } else {
-        const div = document.createElement("div");
-        document
-          .getElementById("newIngredientButton")
-          .classList.add("newIngredientGone");
-        document
-          .getElementById("newIngredientButton")
-          .classList.remove("newIngredient");
-        div.innerHTML = `<h2 class = "text-center">Only 20 Ingredients Allowed.</h2>`;
-        document.querySelector(".moreIngredients").appendChild(div);
-      }
-    }
+    // function newIngredientClicked() {
+    //   if (numIngredients <= 20) {
+    //     const div = document.createElement("div");
+    //     div.classList.add("ingredientContainer");
+    //     var num = String(numIngredients);
+    //     div.innerHTML = `<input id = "ingredient${num}" class = "text-center ingredientInput" placeholder = "Ingredient ${num}"></input>
+    //     <span><input id = "measure${num}" class = "text-center measureInput" placeholder = "Measure/Units"></input></span>`;
+    //     document.querySelector(".moreIngredients").appendChild(div);
+    //     numIngredients = numIngredients + 1;
+    //   } else {
+    //     const div = document.createElement("div");
+    //     document
+    //       .getElementById("newIngredientButton")
+    //       .classList.add("newIngredientGone");
+    //     document
+    //       .getElementById("newIngredientButton")
+    //       .classList.remove("newIngredient");
+    //     div.innerHTML = `<h2 class = "text-center">Only 20 Ingredients Allowed.</h2>`;
+    //     document.querySelector(".moreIngredients").appendChild(div);
+    //   }
+    // }
 
     return (
       <div className = "contentContainer">
@@ -123,8 +168,9 @@ class AddRecipe extends Component {
               <input id = "ingredient3" className = "text-center ingredientInput" placeholder = "Ingredient 3"></input>
               <span><input id = "measure3" className = "text-center measureInput" placeholder = "Measure/Units"></input></span>
             </div>
+            {this.state.finalBlocks}
             <div id = "moreIngredients" className = "moreIngredients"></div>
-            <button type="button" id = "newIngredientButton" className = "newIngredient" onClick={newIngredientClicked}>+ Add Ingredient</button>
+            <button type="button" id = "newIngredientButton" className = {this.state.newIngredientButton} onClick={this.newIngredient}>+ Add Ingredient</button>
             <textarea name = "Instructions" required value={this.state.Instructions} onChange={this.changeHandler} className = "directionsInput" placeholder = "Preparation Instructions"></textarea>
             <div className = "mainInput">
                 <input name = "mealThumbnail" required value={this.state.mealThumbnail} onChange={this.changeHandler} className = "text-center mainInput urlInput" placeholder = "Enter URL for Recipe Image"></input>

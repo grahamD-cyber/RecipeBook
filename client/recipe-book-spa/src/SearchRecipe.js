@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Animated, Easing } from 'react-native';
+// import { MDBCard, MDBCardImage, MDBCardBody, MDBCardTitle, MDBCardText, MDBRow, MDBCol } from 'mdb-react-ui-kit';
+import { MDBCard, MDBCardTitle, MDBBtn, MDBCardGroup, MDBCardImage, MDBCardText, MDBCardBody } from "mdbreact";
 import {
   NavLink,
   HashRouter,
@@ -154,7 +156,6 @@ class SearchRecipe extends Component {
     }
   )).start();
     var keyword = this.props.match.params.recipeName;
-
     const searchString = "/api/searchRecipeByName/" + keyword
     RecipeApi.get(searchString).then(
       (result) => {
@@ -173,12 +174,10 @@ class SearchRecipe extends Component {
           error,
         });
       }  
-    );
-    
+    );    
   }
 
   render() {
-
     const spin = this.state.spinAnim.interpolate({
       inputRange: [0, 1],
       outputRange: ['0deg', '360deg']
@@ -213,7 +212,7 @@ class SearchRecipe extends Component {
       if (this.state.items.data.recipes.length !== 0)
       {
         recipeIcons = madeArr.map((item) => (
-          <NavLink to={`/recipe/${item[1].idMeal}`} className = "recipeBox">
+          <NavLink to={`/recipe/${item[1].idMeal}`} className = "shadow recipeBox">
             <div className = "recipeImageHolder">
               <img className = "recipeSearchImage" alt = "recipe" src = {item[1].mealThumbnail}/>
             </div>
@@ -223,7 +222,7 @@ class SearchRecipe extends Component {
       }
 
       return (
-        <HashRouter>
+      <HashRouter>
         <div className = "contentContainer">
           <div className = "spatulaContainer">
               <img className = "spatula" alt="SpatulaImg" src = "/images/spatulaImage.png"/>
