@@ -31,7 +31,10 @@ app.get("/api/listAllRecipeNames/:sortType", async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      res.status(200).json({
+        status: "success",
+        error: err
+      });
     });
 });
 
@@ -49,7 +52,10 @@ app.get("/api/listAllRecipes/:sortType", async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      res.status(200).json({
+        status: "success",
+        error: err
+      });
     });
 });
 
@@ -74,7 +80,10 @@ app.get("/api/getRecipeById/:id", async (req, res) => {
         });
       })
       .catch((err) => {
-        console.log(err);
+        res.status(200).json({
+          status: "success",
+          error: err
+        });
       });
   }
 });
@@ -100,7 +109,10 @@ app.get("/api/searchRecipeByName/:name", async (req, res) => {
         });
       })
       .catch((err) => {
-        console.log(err);
+        res.status(200).json({
+          status: "success",
+          error: err
+        });
       });
   }
 });
@@ -118,7 +130,10 @@ app.post("/api/addRecipe", async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      res.status(200).json({
+        status: "success",
+        error: err
+      });
     });
 });
 
@@ -141,7 +156,10 @@ app.put("/api/updateRecipe/:id", async (req, res) => {
         });
       })
       .catch((err) => {
-        console.log(err);
+        res.status(200).json({
+          status: "success",
+          error: err
+        });
       });
   }
 });
@@ -164,9 +182,41 @@ app.delete("/api/deleteRecipe/:id", async (req, res) => {
           });
         })
         .catch((err) => {
-          console.log(err);
+          res.status(200).json({
+            status: "success",
+            error: err
+          });
         });
     }
   });
+
+  app.get("/api/checkRecipeExists/:name", async (req, res) => {
+    var params = req.params;
+    var name = params.name ? params.name : "";
+    if (name == "") {
+      res.status(200).json({
+        status: success,
+        data: {},
+        message: "Name of recipe is Mandatory",
+      });
+    } else {
+      services
+        .checkRecipeExists(name)
+        .then((result) => {
+          res.status(200).json({
+            status: "success",
+            data: {
+              recipes: result
+            },
+          });
+        })
+        .catch((err) => {
+          res.status(200).json({
+            status: "success",
+            error: err
+          });
+        });
+    }
+  }); 
 
 app.listen(PORT, () => console.log(`Server running at port : ${PORT})`));

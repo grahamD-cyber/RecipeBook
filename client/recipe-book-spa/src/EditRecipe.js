@@ -28,7 +28,6 @@ class EditRecipe extends Component {
   changeHandler = (event) => {
     let nam = event.target.name;
     let val = event.target.value;
-    console.log(val)
     this.setState({ [nam]: val });
   };
 
@@ -115,7 +114,6 @@ class EditRecipe extends Component {
   }
   submitData = (event) => {
     event.preventDefault();
-    console.log("SUBMITTT")
     var recipeData = {};
     recipeData.mealName = this.state.mealName ? this.state.mealName : "";
     this.getIngredientsOrMeasure(recipeData, "ingredient");
@@ -149,15 +147,9 @@ class EditRecipe extends Component {
     }
 
     const test = `/api/updateRecipe/${this.state.id}`
-    console.log(test)
 
     RecipeApi.put(`/api/updateRecipe/${this.state.id}`, recipeData).then((response) => {
-    //   if (response && response.data && Array.isArray(response.data.data.recipes) && response.data.data.recipes[0].idMeal) {
-    //     // var id = response.data.data.recipes[0].idMeal;
-    //     // Redirect to Page that displays newly created Recipe
-    //     console.log("LKJSDFLKJDSFLKJSDFLKJSDFLKJSDFLKJSDFLKJSD")
         this.props.history.push(`/recipe/${this.state.id}`)
-
     });
   };
 

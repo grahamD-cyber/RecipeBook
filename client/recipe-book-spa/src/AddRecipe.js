@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import "./css/addStyles.css";
 import DropdownButton from "./DropdownButton.js";
 import RecipeApi from "./services/RecipeApi";
+import { ToastContainer, toast } from 'material-react-toastify';
+import 'material-react-toastify/dist/ReactToastify.css';
 
 class AddRecipe extends Component {
   constructor(props) {
@@ -116,43 +118,110 @@ class AddRecipe extends Component {
     }
   }
 
-  submitData = (event) => {
-    event.preventDefault();
-
+  addRecipeToDb() {
     var recipeData = {};
-    recipeData.mealName = this.state.mealName ? this.state.mealName : "";
-    this.getIngredientsOrMeasure(recipeData, this.state.ingredients, "ingredient");
-    this.getIngredientsOrMeasure(recipeData, this.state.measures, "measure");
-    recipeData.mealThumbnail = this.state.mealThumbnail ? this.state.mealThumbnail : "";
-    recipeData.Instructions = this.state.Instructions ? this.state.Instructions : "";
-    recipeData.Tags = this.state.Tags ? this.state.Tags : "";
-    recipeData.Region = this.state.mainRegion ? this.state.mainRegion : "";
-    recipeData.Category = this.state.mainCategory ? this.state.mainCategory : "";
-    recipeData.Type = this.state.mainType ? this.state.mainType : "";
+      recipeData.mealName = this.state.mealName ? this.state.mealName : "";
+      this.getIngredientsOrMeasure(recipeData, this.state.ingredients, "ingredient");
+      this.getIngredientsOrMeasure(recipeData, this.state.measures, "measure");
+      recipeData.mealThumbnail = this.state.mealThumbnail ? this.state.mealThumbnail : "";
+      recipeData.Instructions = this.state.Instructions ? this.state.Instructions : "";
+      recipeData.Tags = this.state.Tags ? this.state.Tags : "";
+      recipeData.Region = this.state.mainRegion ? this.state.mainRegion : "";
+      recipeData.Category = this.state.mainCategory ? this.state.mainCategory : "";
+      recipeData.Type = this.state.mainType ? this.state.mainType : "";
 
-    RecipeApi.post("/api/addRecipe", recipeData).then((response) => {
-      if (response && response.data && Array.isArray(response.data.data.recipes) && response.data.data.recipes[0].idMeal) {
-        var id = response.data.data.recipes[0].idMeal;
+      RecipeApi.post("/api/addRecipe", recipeData).then((response) => {
+        if (response && response.data && Array.isArray(response.data.data.recipes) && response.data.data.recipes[0].idMeal) {
+          var id = response.data.data.recipes[0].idMeal;
 
-        // Redirect to Page that displays newly created Recipe
-        this.props.history.push(`/recipe/${id}`)
+          // Redirect to Page that displays newly created Recipe
+          this.props.history.push(`/recipe/${id}`)
+        }
+      });
+  }
+
+  recipeAlreadyExists(recipeName)  {
+    RecipeApi.get("/api/checkRecipeExists/"+ recipeName).then((response) => {
+      if (response && response.data && Array.isArray(response.data.data.recipes)) {
+        var recipes = response.data.data.recipes;
+        if (recipes.length > 0) {
+          toast.error("Recipe with this name already exists, Give a unique name to your recipe", {
+            position:"top-right",
+            autoClose: 3000,
+            closeOnClick: true
+          });
+        } else {
+          this.addRecipeToDb()
+        }
       }
     });
+  }
+
+  validateFields() {
+    var isValid = true;
+    var errMsg;
+    var mealName = this.state.mealName ? this.state.mealName : "";
+    var ingredient1 = this.state.ingredients["ingredient1"];
+    var measure1 = this.state.measures["measure1"];
+    var mealThumbnail = this.state.mealThumbnail ? this.state.mealThumbnail : "";
+    var Instructions = this.state.Instructions ? this.state.Instructions : "";
+
+    if (mealName === "") {
+      isValid = false;
+      errMsg = "Meal Name is mandatory"
+    }
+
+    if (isValid && ingredient1 === undefined) {
+      isValid = false;
+      errMsg = "Recipe should have atleast one ingredient"
+    }
+
+    if (isValid && measure1 === undefined) {
+      isValid = false;
+      errMsg = "Ingredient should have some measure"
+    }
+
+    if (isValid && Instructions === "") {
+      isValid = false;
+      errMsg = "Recipe instructions are mandatory"
+    }
+
+    if (isValid && mealThumbnail === "") {
+      isValid = false;
+      errMsg = "Thumbnail url is mandatory"
+    }
+
+    if (!isValid) {
+      toast.dark(errMsg, {
+        position:"top-right",
+        autoClose: 3000,
+        closeOnClick: true
+      });
+    }
+    return isValid;
+  }
+
+  submitData = (event) => {
+    event.preventDefault();
+    if (this.validateFields()) {
+      this.recipeAlreadyExists(this.state.mealName)
+    }
   };
 
   render() {
 
     return (
       <div className = "contentContainer">
+        <ToastContainer />
         <div className = "spatulaContainer">
             <img className = "spatula" alt="SpatulaImg" src = "/images/spatulaImage.png"/>
         </div>
         <div className = "mainAddRecipeContainer">
           <h1 className = "text-center">Add Recipe.</h1>
           <form method="POST" onSubmit={this.submitData}>
-            <input name = "mealName"  required value={this.state.mealName} onChange={this.changeHandler} className = "text-center mainInput" placeholder = "Recipe Name"></input>
+            <input name = "mealName"   value={this.state.mealName} onChange={this.changeHandler} className = "text-center mainInput" placeholder = "Recipe Name"></input>
             <div id = "ingredientContainer1" className = "ingredientContainer">
-              <input name = "ingredient1" required value={this.state.ingredients[`ingredient1`]} onChange={this.ingredientsChangeHandler} className = "text-center ingredientInput" placeholder = "Ingredient 1"></input>
+              <input name = "ingredient1"  value={this.state.ingredients[`ingredient1`]} onChange={this.ingredientsChangeHandler} className = "text-center ingredientInput" placeholder = "Ingredient 1"></input>
               <span><input name = "measure1" value={this.state.measures[`measure1`]} onChange={this.measuresChangeHandler} className = "text-center measureInput" placeholder = "Measure/Units"></input></span>
             </div>
             <div id = "ingredientContainer2" className = "ingredientContainer">
@@ -166,9 +235,9 @@ class AddRecipe extends Component {
             {this.state.finalBlocks}
             <div id = "moreIngredients" className = "moreIngredients"></div>
             <button type="button" id = "newIngredientButton" className = {this.state.newIngredientButton} onClick={this.newIngredient}>+ Add Ingredient</button>
-            <textarea name = "Instructions" required value={this.state.Instructions} onChange={this.changeHandler} className = "directionsInput" placeholder = "Preparation Instructions"></textarea>
+            <textarea name = "Instructions"  value={this.state.Instructions} onChange={this.changeHandler} className = "directionsInput" placeholder = "Preparation Instructions"></textarea>
             <div className = "mainInput">
-                <input name = "mealThumbnail" required value={this.state.mealThumbnail} onChange={this.changeHandler} className = "text-center mainInput urlInput" placeholder = "Enter URL for Recipe Image"></input>
+                <input name = "mealThumbnail"  value={this.state.mealThumbnail} onChange={this.changeHandler} className = "text-center mainInput urlInput" placeholder = "Enter URL for Recipe Image"></input>
                 <img className = "uploadImage" alt = "upload" src = "../images/photoIcon.png"/>
             </div>
             <DropdownButton mainText = {this.state.mainCategory} changeData={this.changeCategory.bind(this)} id = "Category" className = {"category"} dropdown = {"categoryDropdown"} dropdownContainer = {"categoryDropdownContainer"} mainButton={"categoryMain"} categories = {["Appetizers", "Beverages", "Soups","Salads", "Vegetables","Main Dishes","Breads", "Rolls","Desserts", "Sides", "Miscellaneous"]} imageId = "categoryImage" image = {"../images/categoryIcon.png"}/>

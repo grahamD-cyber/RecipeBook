@@ -1,8 +1,6 @@
 const pool = require("../dbConfig")
 
 const listAllRecipeNames = async function(sort = 0) {
-    // promise - checkout a client
-
     var query = 'SELECT "idMeal","mealName" FROM public."Recipe" ORDER BY "mealName"'
     var sortType = ""
     if (sort == 1) {
@@ -16,8 +14,6 @@ const listAllRecipeNames = async function(sort = 0) {
 }
 
 const listAllRecipes = async function(sort = 0) {
-    // promise - checkout a client
-
     var query = 'SELECT * FROM public."Recipe" ORDER BY "idMeal"'
     var sortType = ""
     if (sort == 1) {
@@ -40,7 +36,6 @@ const getRecipeById = async function(recipeId) {
 }
 
 const searchRecipeByName = async function(recipeName) {
-    // promise - checkout a client
     var results = [];
     if (typeof recipeName != "string") {
         throw("The given recipeName is invalid");
@@ -53,8 +48,6 @@ const searchRecipeByName = async function(recipeName) {
 }
 
 const updateRecipe = async function(recipeId, recipeData) {
-    console.log(recipeData)
-    console.log(recipeId)
     recipeData.lastUpdate = new Date(Date.now()).toISOString();
     const query = {
         text: `UPDATE public."Recipe" SET "mealThumbnail" = $1, "mealName" = $2, ingredient1 = $3, ingredient2 = $4, ingredient3 = $5, ingredient4 = $6, ingredient5 = $7, ingredient6 = $8, ingredient7 = $9, ingredient8 = $10, ingredient9 = $11, ingredient10 = $12, ingredient11 = $13, ingredient12 = $14, ingredient13 = $15, ingredient14 = $16, ingredient15 = $17, ingredient16 = $18, ingredient17 = $19, ingredient18 = $20, ingredient19= $21, ingredient20 = $22, "Youtube" = $23, "Tags" = $24, "Instructions" = $25, "lastUpdate" = $26, "Region" = $27, "Category" = $28, measure1 = $29, measure2 = $30, measure3 = $31, measure4 = $32, measure5 = $33, measure6 = $34, measure7 = $35, measure8 = $36, measure9 = $37, measure10 = $38, measure11 = $39, measure12 = $40, measure13 = $41, measure14 = $42, measure15 = $43, measure16 = $44, measure17 = $45, measure18 = $46, measure19 = $47, measure20 = $48, "Type" = $49 WHERE "idMeal" = ${recipeId}`,
@@ -65,7 +58,6 @@ const updateRecipe = async function(recipeId, recipeData) {
 }
 
 const addRecipe = async function(recipeData) {
-    console.log(recipeData)
     recipeData.lastUpdate = new Date(Date.now()).toISOString();
     const query = {
         text: `INSERT INTO public."Recipe"(
@@ -77,10 +69,20 @@ const addRecipe = async function(recipeData) {
     return rows;
 }
 
-
-
 const deleteRecipe = async function(recipeId) {
-    
+    const query = {
+        text: `DELETE FROM public."Recipe" WHERE "idMeal" = $1`,
+        values: [recipeId]
+    }
+    await pool.query(query)
 }
 
-module.exports = { listAllRecipeNames, listAllRecipes, getRecipeById, searchRecipeByName, addRecipe, updateRecipe, deleteRecipe }
+const checkRecipeExists = async function(recipeName) {
+    const query = {
+        text: `SELECT * FROM public."Recipe" WHERE UPPER("mealName") like UPPER('%${recipeName}%')`
+    }
+    const { rows } = await pool.query(query)
+    return rows;
+}
+
+module.exports = { listAllRecipeNames, listAllRecipes, getRecipeById, searchRecipeByName, addRecipe, updateRecipe, deleteRecipe, checkRecipeExists }

@@ -16,32 +16,12 @@ class DropdownButton extends Component {
         }
       }
 
-    //   componentDidMount() {
-    //     document.addEventListener('click', this.handleClickOutside, true);
-    //     }
-
-    //     componentWillUnmount() {
-    //         document.removeEventListener('click', this.handleClickOutside, true);
-    //     }
-
       handleClick(event) {
         const id = event.target.id;
-        // const id2 = event.target
         var name = document.getElementById(id).innerHTML
         this.props.changeData(name)
-        // this.setState({mainText: name});
 
       }
-
-    //   handleClickOutside = event => {
-    //     const domNode = ReactDOM.findDOMNode(this);
-    
-    //     if (!domNode || !domNode.contains(event.target)) {
-    //         console.log("lkjsdflkjs")
-    //         this.handleDropdown(event)
-    //         event.preventDefault();
-    //     }
-    // }
 
       onClick(event) {
         this.handleDropdown(event);

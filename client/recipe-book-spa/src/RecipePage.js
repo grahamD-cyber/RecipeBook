@@ -43,6 +43,21 @@ class Recipe extends Component {
     );
   }
 
+  deleteRecipe = (event) => {
+    var recipeId = this.props.match.params.recipeId
+    var api = "/api/deleteRecipe/" + recipeId;
+    RecipeApi.delete(api).then(
+      (result) => {
+        this.props.history.push(`/browse`)
+      },
+      (error) => {
+        this.setState({
+          isLoaded: true,
+          error,
+        });
+      }
+    );
+  }
 
   render() {
     var ingredients = [];
@@ -93,7 +108,6 @@ class Recipe extends Component {
           var ingredientNum = recipe.ingredient1;
           var measureNum = recipe.measure1;
           var i = 1;
-          console.log(ingredientNum)
           while (ingredientNum !== null && ingredientNum !== "" && i <= 20)
           {
             ingredients.push(ingredientNum);
@@ -154,6 +168,9 @@ class Recipe extends Component {
                   </div>
                   <div className = "widgetContainer">
                     <NavLink to={`/edit/${recipe.idMeal}`} className = "text-center editRecipe">Edit Recipe</NavLink>
+                  </div>
+                  <div className = "widgetContainer">
+                    <div className = "text-center deleteRecipe" onClick={this.deleteRecipe}>Delete Recipe</div>
                   </div>
                 </div> 
               </div>
