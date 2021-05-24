@@ -182,6 +182,8 @@
   top: 40%;
   left: 5%;
   right: 5%;
-  font-family: "Fredericka the Great", cursive !important;
-  font-size: 3vw;
+  font-family: "Saira Extra Condensed", sans-serif;
+  color: rgb(58, 58, 58);
+  font-weight: bold;
+  font-size: 3.4vw;
 }

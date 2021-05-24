@@ -30,27 +30,17 @@ class DropdownButton extends Component {
      }
 
       handleDropdown(event) {
-        const id = document.getElementById(this.state.dropdownContainer);
-        const id2 = document.getElementById(this.state.dropdown);
-        const id3 = document.getElementById(this.state.imageId);
-        if (id.classList.value === "dropdownContainer-closed")
+        if (this.props.isOpen === false)
         {
-            id.classList.remove("dropdownContainer-closed");
-            id.classList.add("dropdownContainer-open");
-            id2.classList.remove("dropdown-closed");
-            id2.classList.add("dropdown-open");
-            id3.classList.add("downArrowRotate");
-            id3.classList.add("downArrow");
+           this.props.toggleThisClass(true)
         }
         else
         {
-            id.classList.remove("dropdownContainer-open");
-            id.classList.add("dropdownContainer-closed");
-            id2.classList.remove("dropdown-open");
-            id2.classList.add("dropdown-closed");
-            id3.classList.add("downArrow");
-            id3.classList.remove("downArrowRotate");
+            this.props.toggleThisClass(false)
         }
+        
+        this.props.toggleClass1(false)
+        this.props.toggleClass2(false)
         event.preventDefault();
     }
 
@@ -60,18 +50,34 @@ class DropdownButton extends Component {
     let category = madeArr.map(p=>
         <button id = {this.props.className + p[0]} name= {this.props.class + p[0]} className = "text-center dropdownButtons" onClick = {this.onClick} >{p[1]}</button>
     );
-    return (
-
-        <div id = {this.props.dropdownContainer} className = "dropdownContainer-closed">
-            <button id = {this.props.mainButton} className = "text-center mainButton" onClick = {this.handleDropdown}>{this.props.mainText}
-                <img id = {this.props.imageId} className = "downArrow" src = "../images/dropdownIcon.png" alt = "dropdown"/>
-                <img className = "uploadImage" alt = "category" src = {this.props.image}/>
-            </button>
-            <div id = {this.props.dropdown} className = "dropdown-closed">
-                {category}
+    if (this.props.isOpen === false)
+    {
+        return (
+            <div id = {this.props.dropdownContainer} className = "dropdownContainer-closed">
+                <button id = {this.props.mainButton} className = "text-center mainButton" onClick = {this.handleDropdown}>{this.props.mainText}
+                    <img id = {this.props.imageId} className = "downArrow" src = "../images/dropdownIcon.png" alt = "dropdown"/>
+                    <img className = "uploadImage" alt = "category" src = {this.props.image}/>
+                </button>
+                <div id = {this.props.dropdown} className = "dropdown-closed">
+                    {category}
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
+    else
+    {
+        return (
+            <div id = {this.props.dropdownContainer} className = "dropdownContainer-open">
+                <button id = {this.props.mainButton} className = "text-center mainButton" onClick = {this.handleDropdown}>{this.props.mainText}
+                    <img id = {this.props.imageId} className = "downArrow downArrowRotate" src = "../images/dropdownIcon.png" alt = "dropdown"/>
+                    <img className = "uploadImage" alt = "category" src = {this.props.image}/>
+                </button>
+                <div id = {this.props.dropdown} className = "dropdown-open">
+                    {category}
+                </div>
+            </div>
+        );
+    }
   }
 }
  

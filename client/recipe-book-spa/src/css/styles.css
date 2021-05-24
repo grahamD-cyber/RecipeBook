@@ -62,7 +62,7 @@ a {
   font-family: "Saira Extra Condensed", sans-serif;
   font-size: 30px;
   text-decoration: none;
-  color: rgb(0, 0, 0);
+  color: rgb(58, 58, 58);
 }
 
 a:hover {
@@ -81,9 +81,10 @@ a:focus {
 }
 
 h1 {
-  font-family: "Fredericka the Great", cursive !important;
-  font-size: 40px;
-  color: rgb(37, 37, 37);
+  font-family: "Saira Extra Condensed", sans-serif;
+  font-size: 48px !important;
+  color: rgb(58, 58, 58);
+  font-weight: bold;
   text-align: center;
   margin-top: 40px;
   margin-bottom: 40px;

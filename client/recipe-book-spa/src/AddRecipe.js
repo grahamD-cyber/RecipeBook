@@ -13,6 +13,10 @@ class AddRecipe extends Component {
     this.changeCategory = this.changeCategory.bind(this);
     this.changeRegion = this.changeRegion.bind(this);
     this.changeType = this.changeType.bind(this);
+    this.toggleCategory = this.toggleCategory.bind(this);
+    this.toggleRegion = this.toggleRegion.bind(this);
+    this.toggleType = this.toggleType.bind(this);
+
     this.state = {
       mealName: "",
       Instructions: "",
@@ -27,7 +31,10 @@ class AddRecipe extends Component {
       finalBlocks: [],
       newIngredientButton: "newIngredient",
       ingredients: {},
-      measures: {}
+      measures: {},
+      categoryOpen: false,
+      regionOpen: false,
+      typeOpen: false
     };
   }
 
@@ -63,6 +70,18 @@ class AddRecipe extends Component {
 
   changeRegion(newValue) {
     this.setState({ mainRegion: newValue });
+  }
+
+  toggleCategory(newValue) {
+    this.setState({ categoryOpen: newValue });
+  }
+
+  toggleRegion(newValue) {
+    this.setState({ regionOpen: newValue });
+  }
+
+  toggleType(newValue) {
+    this.setState({ typeOpen : newValue });
   }
 
   newIngredient(event)
@@ -145,7 +164,7 @@ class AddRecipe extends Component {
       if (response && response.data && Array.isArray(response.data.data.recipes)) {
         var recipes = response.data.data.recipes;
         if (recipes.length > 0) {
-          toast.error("Recipe with this name already exists, Give a unique name to your recipe", {
+          toast.error("Recipe with this name already exists. Give a unique name to your recipe", {
             position:"top-right",
             autoClose: 3000,
             closeOnClick: true
@@ -173,7 +192,7 @@ class AddRecipe extends Component {
 
     if (isValid && ingredient1 === undefined) {
       isValid = false;
-      errMsg = "Recipe should have atleast one ingredient"
+      errMsg = "Recipe should have at least one ingredient"
     }
 
     if (isValid && measure1 === undefined) {
@@ -188,7 +207,7 @@ class AddRecipe extends Component {
 
     if (isValid && mealThumbnail === "") {
       isValid = false;
-      errMsg = "Thumbnail url is mandatory"
+      errMsg = "Thumbnail URL is mandatory"
     }
 
     if (!isValid) {
@@ -240,9 +259,9 @@ class AddRecipe extends Component {
                 <input name = "mealThumbnail"  value={this.state.mealThumbnail} onChange={this.changeHandler} className = "text-center mainInput urlInput" placeholder = "Enter URL for Recipe Image"></input>
                 <img className = "uploadImage" alt = "upload" src = "../images/photoIcon.png"/>
             </div>
-            <DropdownButton mainText = {this.state.mainCategory} changeData={this.changeCategory.bind(this)} id = "Category" className = {"category"} dropdown = {"categoryDropdown"} dropdownContainer = {"categoryDropdownContainer"} mainButton={"categoryMain"} categories = {["Appetizers", "Beverages", "Soups","Salads", "Vegetables","Main Dishes","Breads", "Rolls","Desserts", "Sides", "Miscellaneous"]} imageId = "categoryImage" image = {"../images/categoryIcon.png"}/>
-            <DropdownButton mainText = {this.state.mainRegion} changeData={this.changeRegion.bind(this)} id = "Region" className = {"region"} dropdown = {"regionDropdown"} dropdownContainer = {"regionDropdownContainer"} mainButton={"regionMain"} categories = {["Turkish","Italian","Chinese","Jamaican","Dutch","American","Tunisian","Spanish","Japanese","Canadian","Indian","Vietnamese","Portuguese","Moroccan","Unknown","Irish","French","Mexican","Thai","Malaysian","Kenyan","British","Egyptian","Greek","Polish","Russian"]} imageId = "regionImage" image = {"../images/regionIcon.png"}/>
-            <DropdownButton mainText = {this.state.mainType} changeData={this.changeType.bind(this)} id = "Type" className = {"type"} dropdown = {"typeDropdown"} dropdownContainer = {"typeDropdownContainer"} mainButton={"typeMain"} categories = {["Vegetarian", "Non-Vegetarian"]} imageId = "typeImage" image = {"../images/typeIcon.png"}/>
+            <DropdownButton isOpen = {this.state.categoryOpen} mainText = {this.state.mainCategory} toggleThisClass = {this.toggleCategory.bind(this)} toggleClass1 = {this.toggleRegion.bind(this)} toggleClass2 = {this.toggleType.bind(this)} changeData={this.changeCategory.bind(this)} id = "Category" className = {"category"} dropdown = {"categoryDropdown"} dropdownContainer = {"categoryDropdownContainer"} mainButton={"categoryMain"} categories = {["Appetizers", "Beverages", "Soups","Salads", "Vegetables","Main Dishes","Breads", "Rolls","Desserts", "Sides", "Miscellaneous"]} imageId = "categoryImage" image = {"../images/categoryIcon.png"}/>
+            <DropdownButton isOpen = {this.state.regionOpen} mainText = {this.state.mainRegion} toggleThisClass = {this.toggleRegion.bind(this)} toggleClass1 = {this.toggleCategory.bind(this)} toggleClass2 = {this.toggleType.bind(this)} changeData={this.changeRegion.bind(this)} id = "Region" className = {"region"} dropdown = {"regionDropdown"} dropdownContainer = {"regionDropdownContainer"} mainButton={"regionMain"} categories = {["Turkish","Italian","Chinese","Jamaican","Dutch","American","Tunisian","Spanish","Japanese","Canadian","Indian","Vietnamese","Portuguese","Moroccan","Unknown","Irish","French","Mexican","Thai","Malaysian","Kenyan","British","Egyptian","Greek","Polish","Russian"]} imageId = "regionImage" image = {"../images/regionIcon.png"}/>
+            <DropdownButton isOpen = {this.state.typeOpen} mainText = {this.state.mainType} toggleThisClass = {this.toggleType.bind(this)} toggleClass1 = {this.toggleRegion.bind(this)} toggleClass2 = {this.toggleCategory.bind(this)} changeData={this.changeType.bind(this)} id = "Type" className = {"type"} dropdown = {"typeDropdown"} dropdownContainer = {"typeDropdownContainer"} mainButton={"typeMain"} categories = {["Vegetarian", "Non-Vegetarian"]} imageId = "typeImage" image = {"../images/typeIcon.png"}/>
             <div className = "mainInput">
                 <input name = "Tags" value={this.state.Tags} onChange={this.changeHandler} className = "mainInput tagsInput" placeholder = "Tags e.g.(chicken, pie, carrots, etc.)"></input>
                 <img className = "uploadImage" alt = "tags" src = "../images/tagIcon.png"/>
