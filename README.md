@@ -14,7 +14,7 @@ Thus we aim to build a minimalistic simple and easy to use website for cooking b
 
 ## Home Page
 
-![image](https://user-images.githubusercontent.com/36131683/119289371-5611e500-bbff-11eb-8d1d-c6dcf68cf034.png)
+![image](https://user-images.githubusercontent.com/36131683/119293193-bfe1bd00-bc06-11eb-8ea4-fced7ca4fa42.png)
 
 ## Features
 It supports all the basic CRUD functionalities, 
