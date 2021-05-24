@@ -9,8 +9,8 @@ This Recipe Book was our final project in the course "465P/565 – Full Stack We
 
 ## Motivation to build this app! 
 `Learning to cook is one of the important aspects of life which enables a person to be independent.
-Often times we find recipe website which are cluttered with too much information
-Thus we aim to build a minimalistic simple and easy to use website for cooking beginner’s life ourselves!`
+Often times we find recipe website which are cluttered with too much information.
+Thus, we aim to build a minimalistic simple and easy to use website for cooking beginners life ourselves!`
 
 ## Home Page
 
