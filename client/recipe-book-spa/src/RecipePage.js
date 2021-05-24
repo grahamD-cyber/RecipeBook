@@ -3,6 +3,7 @@ import {NavLink} from "react-router-dom";
 import { View,Animated, Easing } from 'react-native';
 import RecipeApi from "./services/RecipeApi";
 import "./css/recipeStyles.css";
+import SpringScrollbars from "./services/SpringScrollBar";
 
 class Recipe extends Component {
   constructor(props) {
@@ -124,6 +125,7 @@ class Recipe extends Component {
           }
           return (
               <div className = "contentContainer">
+                <SpringScrollbars>
                 <div className = "spatulaContainer">
                     <img className = "spatula" alt="SpatulaImg" src = "/images/spatulaImage.png"/>
                 </div>
@@ -172,7 +174,8 @@ class Recipe extends Component {
                   <div className = "widgetContainer">
                     <div className = "text-center deleteRecipe" onClick={this.deleteRecipe}>Delete Recipe</div>
                   </div>
-                </div> 
+                </div>
+                </SpringScrollbars>
               </div>
             
           );

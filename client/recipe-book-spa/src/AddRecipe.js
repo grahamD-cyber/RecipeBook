@@ -4,6 +4,7 @@ import DropdownButton from "./DropdownButton.js";
 import RecipeApi from "./services/RecipeApi";
 import { ToastContainer, toast } from 'material-react-toastify';
 import 'material-react-toastify/dist/ReactToastify.css';
+import SpringScrollbars from "./services/SpringScrollBar";
 
 class AddRecipe extends Component {
   constructor(props) {
@@ -232,6 +233,7 @@ class AddRecipe extends Component {
     return (
       <div className = "contentContainer">
         <ToastContainer />
+        <SpringScrollbars>
         <div className = "spatulaContainer">
             <img className = "spatula" alt="SpatulaImg" src = "/images/spatulaImage.png"/>
         </div>
@@ -275,6 +277,7 @@ class AddRecipe extends Component {
             <button id = "submitButton" className = "text-center submitButton" type="submit">Submit Recipe</button>
           </form>
         </div>
+        </SpringScrollbars>
       </div>
     );
   }
