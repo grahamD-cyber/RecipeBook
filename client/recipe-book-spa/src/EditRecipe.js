@@ -3,6 +3,7 @@ import "./css/addStyles.css";
 import DropdownButton from "./DropdownButton.js";
 import RecipeApi from "./services/RecipeApi";
 import {Animated, Easing } from 'react-native';
+import SpringScrollbars from "./services/SpringScrollBar";
 
 class EditRecipe extends Component {
   constructor(props) {
@@ -231,6 +232,7 @@ class EditRecipe extends Component {
 
         return (
         <div className = "contentContainer">
+          <SpringScrollbars>
             <div className = "spatulaContainer">
                 <img className = "spatula" alt="SpatulaImg" src = "/images/spatulaImage.png"/>
             </div>
@@ -262,6 +264,7 @@ class EditRecipe extends Component {
                 <button id = "submitButton" className = "text-center submitButton" type="submit">Update Recipe</button>
             </form>
             </div>
+            </SpringScrollbars>
         </div>
         );
       }

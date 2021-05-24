@@ -4,7 +4,7 @@ import {
   NavLink,
   HashRouter
 } from "react-router-dom";
-
+import SpringScrollbars from "./services/SpringScrollBar";
 import RecipeApi from "./services/RecipeApi";
 
 class Browse extends Component {
@@ -106,6 +106,7 @@ class Browse extends Component {
       return (
         <HashRouter>
           <div className="contentContainer">
+          <SpringScrollbars>
             <div className="spatulaContainer">
               <img
                 className="spatula"
@@ -145,6 +146,7 @@ class Browse extends Component {
                 })}
               </div>
             </div>
+            </SpringScrollbars>
           </div>
         </HashRouter>
       );
