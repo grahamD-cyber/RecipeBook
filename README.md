@@ -1,6 +1,6 @@
 # Recipe Book (using PERN Stack)
 
-This was the submission for our final project in the course "465P/565 – Full Stack Web Development" at Portland State University under the guidance of professor "Caterina Paun". We utilized the PERN stack i.e (Postgres, Express, React, Node.js) to accomplish this task. The Recipe book is a replica of a cookbook, which consists of different varieties of recipes (Around 268), instructions and information about preparation and servings of food. 
+This Recipe Book was our final project in the course "465P/565 – Full Stack Web Development" at Portland State University under the guidance of professor "Caterina Paun". We utilized the PERN stack i.e (Postgres, Express, React, Node.js) to accomplish this task. The Recipe book is a replica of a cookbook, which consists of different varieties of recipes (Around 268), instructions and information about preparation and servings of food. 
 
 ## Team Members
   
