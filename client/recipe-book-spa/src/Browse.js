@@ -35,9 +35,10 @@ class Browse extends Component {
         });
       },
       (error) => {
+        console.log(error)
         this.setState({
           isLoaded: true,
-          error,
+          error: error,
         });
       }
     );
