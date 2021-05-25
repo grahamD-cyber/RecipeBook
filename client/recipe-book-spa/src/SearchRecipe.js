@@ -234,7 +234,7 @@ class SearchRecipe extends Component {
       return (
       <HashRouter>
         <div className = "contentContainer">
-        <div className = {this.state.filterDiv}>
+          <div className = {this.state.filterDiv}>
             <button onClick = {this.handleCancelFilter} className = {this.state.stopFilter}>
               <div className = "xLine1"></div>
               <div className = "xLine2"></div>
