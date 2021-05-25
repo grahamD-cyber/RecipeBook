@@ -12,6 +12,9 @@ class EditRecipe extends Component {
     this.changeCategory = this.changeCategory.bind(this);
     this.changeRegion = this.changeRegion.bind(this);
     this.changeType = this.changeType.bind(this);
+    this.toggleCategory = this.toggleCategory.bind(this);
+    this.toggleRegion = this.toggleRegion.bind(this);
+    this.toggleType = this.toggleType.bind(this);
     this.state = {
       mealName: "",
       Instructions: "",
@@ -22,7 +25,10 @@ class EditRecipe extends Component {
       mainRegion: "Choose a Region",
       mainType: "Choose a Type",
       id: "",
-      spinAnim: new Animated.Value(0)
+      spinAnim: new Animated.Value(0),
+      categoryOpen: false,
+      regionOpen: false,
+      typeOpen: false
     };
   }
 
@@ -43,6 +49,19 @@ class EditRecipe extends Component {
   changeRegion(newValue) {
     this.setState({ mainRegion: newValue });
   }
+
+  toggleCategory(newValue) {
+    this.setState({ categoryOpen: newValue });
+  }
+
+  toggleRegion(newValue) {
+    this.setState({ regionOpen: newValue });
+  }
+
+  toggleType(newValue) {
+    this.setState({ typeOpen : newValue });
+  }
+
   getIngredientsOrMeasure(recipeData, fieldName) {
     for (var i = 1; i <= 20; i++) {
       const id = fieldName + i;
@@ -248,9 +267,14 @@ class EditRecipe extends Component {
                     <input name = "mealThumbnail" defaultValue={this.state.mealThumbnail} onChange={this.changeHandler} className = "text-center mainInput youtubeInput"></input>
                     <img className = "uploadImage" alt = "upload" src = "../images/photoIcon.png"/>
                 </div>
-                <DropdownButton mainText = {this.state.mainCategory} changeData={this.changeCategory.bind(this)} id = "Category" className = {"category"} dropdown = {"categoryDropdown"} dropdownContainer = {"categoryDropdownContainer"} mainButton={"categoryMain"} categories = {["Appetizers", "Beverages", "Soups","Salads", "Vegetables","Main Dishes","Breads", "Rolls","Desserts", "Sides", "Miscellaneous"]} imageId = "categoryImage" image = {"../images/categoryIcon.png"}/>
+                  <DropdownButton isOpen = {this.state.categoryOpen} mainText = {this.state.mainCategory} toggleThisClass = {this.toggleCategory.bind(this)} toggleClass1 = {this.toggleRegion.bind(this)} toggleClass2 = {this.toggleType.bind(this)} changeData={this.changeCategory.bind(this)} id = "Category" className = {"category"} dropdown = {"categoryDropdown"} dropdownContainer = {"categoryDropdownContainer"} mainButton={"categoryMain"} categories = {["Appetizers", "Beverages", "Soups","Salads", "Vegetables","Main Dishes","Breads", "Rolls","Desserts", "Sides", "Miscellaneous"]} imageId = "categoryImage" image = {"../images/categoryIcon.png"}/>
+                  <DropdownButton isOpen = {this.state.regionOpen} mainText = {this.state.mainRegion} toggleThisClass = {this.toggleRegion.bind(this)} toggleClass1 = {this.toggleCategory.bind(this)} toggleClass2 = {this.toggleType.bind(this)} changeData={this.changeRegion.bind(this)} id = "Region" className = {"region"} dropdown = {"regionDropdown"} dropdownContainer = {"regionDropdownContainer"} mainButton={"regionMain"} categories = {["Turkish","Italian","Chinese","Jamaican","Dutch","American","Tunisian","Spanish","Japanese","Canadian","Indian","Vietnamese","Portuguese","Moroccan","Unknown","Irish","French","Mexican","Thai","Malaysian","Kenyan","British","Egyptian","Greek","Polish","Russian"]} imageId = "regionImage" image = {"../images/regionIcon.png"}/>
+                  <DropdownButton isOpen = {this.state.typeOpen} mainText = {this.state.mainType} toggleThisClass = {this.toggleType.bind(this)} toggleClass1 = {this.toggleRegion.bind(this)} toggleClass2 = {this.toggleCategory.bind(this)} changeData={this.changeType.bind(this)} id = "Type" className = {"type"} dropdown = {"typeDropdown"} dropdownContainer = {"typeDropdownContainer"} mainButton={"typeMain"} categories = {["Vegetarian", "Non-Vegetarian"]} imageId = "typeImage" image = {"../images/typeIcon.png"}/>
+                
+                
+                {/* <DropdownButton mainText = {this.state.mainCategory} changeData={this.changeCategory.bind(this)} id = "Category" className = {"category"} dropdown = {"categoryDropdown"} dropdownContainer = {"categoryDropdownContainer"} mainButton={"categoryMain"} categories = {["Appetizers", "Beverages", "Soups","Salads", "Vegetables","Main Dishes","Breads", "Rolls","Desserts", "Sides", "Miscellaneous"]} imageId = "categoryImage" image = {"../images/categoryIcon.png"}/>
                 <DropdownButton mainText = {this.state.mainRegion} changeData={this.changeRegion.bind(this)} id = "Region" className = {"region"} dropdown = {"regionDropdown"} dropdownContainer = {"regionDropdownContainer"} mainButton={"regionMain"} categories = {["Turkish","Italian","Chinese","Jamaican","Dutch","American","Tunisian","Spanish","Japanese","Canadian","Indian","Vietnamese","Portuguese","Moroccan","Unknown","Irish","French","Mexican","Thai","Malaysian","Kenyan","British","Egyptian","Greek","Polish","Russian"]} imageId = "regionImage" image = {"../images/regionIcon.png"}/>
-                <DropdownButton mainText = {this.state.mainType} changeData={this.changeType.bind(this)} id = "Type" className = {"type"} dropdown = {"typeDropdown"} dropdownContainer = {"typeDropdownContainer"} mainButton={"typeMain"} categories = {["Vegetarian", "Non-Vegetarian"]} imageId = "typeImage" image = {"../images/typeIcon.png"}/>
+                <DropdownButton mainText = {this.state.mainType} changeData={this.changeType.bind(this)} id = "Type" className = {"type"} dropdown = {"typeDropdown"} dropdownContainer = {"typeDropdownContainer"} mainButton={"typeMain"} categories = {["Vegetarian", "Non-Vegetarian"]} imageId = "typeImage" image = {"../images/typeIcon.png"}/> */}
                 <div className = "mainInput">
                     <input name = "Tags" defaultValue={this.state.Tags} onChange={this.changeHandler} className = "mainInput tagsInput"></input>
                     <img className = "uploadImage" alt = "tags" src = "../images/tagIcon.png"/>

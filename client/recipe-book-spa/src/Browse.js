@@ -15,6 +15,7 @@ class Browse extends Component {
       isLoaded: false,
       items: [],
       spinAnim: new Animated.Value(0),
+      filterMessage: "Sort Z-A"
     };
   }
 
@@ -46,6 +47,18 @@ class Browse extends Component {
 
   reverseList = (event) => {
     var recipeList = this.state.items.data.recipes;
+    if (this.state.filterMessage === "Sort A-Z")
+    {
+      this.setState({
+        filterMessage: "Sort Z-A"
+      });
+    }
+    else
+    {
+      this.setState({
+        filterMessage: "Sort A-Z"
+      });
+    }
     recipeList.reverse();
     this.setState({
       items: {
@@ -115,36 +128,33 @@ class Browse extends Component {
                 src="/images/spatulaImage.png"
               />
             </div>
+            <div className="browseWidgetContainer">
+              <div className="text-center flipList" onClick={this.reverseList}>{this.state.filterMessage}</div>
+            </div>
             <div className="recipe-List">
-              <div className="browseWidgetContainer">
-                <div
-                  className="text-center flipList"
-                  onClick={this.reverseList}
-                >
-                  Flip
-                </div>
-              </div>
               <div>
                 <h1> Browse All Recipes </h1>
-                {Object.entries(group).map(([key, value], i) => {
-                  return (
-                    <div className="recipe-Block" key={i}>
-                      <div className="recipe-key">
-                        <strong>{key}</strong>
-                      </div>
-                      {value.map((item, j) => (
-                        <div className="recipe-Name" key={j}>
-                          <NavLink
-                            to={`/recipe/${item.idMeal}`}
-                            className="links"
-                          >
-                            {item.mealName}
-                          </NavLink>
+                <div className = "recipeSection">
+                  {Object.entries(group).map(([key, value], i) => {
+                    return (
+                      <div className="recipe-Block" key={i}>
+                        <div className="recipe-key">
+                          <strong>{key}</strong>
                         </div>
-                      ))}
-                    </div>
-                  );
-                })}
+                        {value.map((item, j) => (
+                          <div className="recipe-Name" key={j}>
+                            <NavLink
+                              to={`/recipe/${item.idMeal}`}
+                              className="links"
+                            >
+                              {item.mealName}
+                            </NavLink>
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
             </SpringScrollbars>

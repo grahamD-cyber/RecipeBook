@@ -9,6 +9,100 @@
   top: 0px;
 }
 
+.loadingContainer {
+  position: relative;
+  top: 15vh;
+  left: 40vw;
+  right: 40vw;
+  height: 20vw;
+  width: 20vw;
+  /* background-color: sienna; */
+}
+
+/* .loadingContainer > img {
+  background-color: slateblue;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+} */
+
+.plate {
+  position: relative;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  height: 20vw;
+  width: 20vw;
+}
+
+.carrot {
+  position: absolute;
+  top: 2.5vw;
+  left: 2.5vw;
+  right: 2.5vw;
+  bottom: 2.5vw;
+  height: 15vw;
+  width: 15vw;
+}
+
+.loadingText {
+  font-family: "Arvo", serif;
+  position: absolute;
+  font-size: 2.5vw !important;
+  width: 40vw;
+  left: 30vw;
+  right: 30vw;
+  color: rgb(58, 58, 58);
+  /* white-space: nowrap; */
+  margin-top: 16vh;
+}
+
+.editRecipe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: none !important;
+  border-bottom: none !important;
+  border-radius: 15px;
+  background-color: rgb(169, 112, 112);
+  color: white;
+  font-family: "Saira Extra Condensed", sans-serif;
+  justify-content: center !important;
+  align-content: center !important;
+  font-size: 25px;
+  padding-top: 11px;
+}
+
+.editRecipe:hover {
+  color: rgb(233, 233, 233) !important;
+  background-color: rgb(169, 102, 102);
+}
+
+.deleteRecipe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: none !important;
+  border-bottom: none !important;
+  border-radius: 15px;
+  background-color: rgb(169, 112, 112);
+  color: white;
+  font-family: "Saira Extra Condensed", sans-serif;
+  justify-content: center !important;
+  align-content: center !important;
+  font-size: 25px;
+  padding-top: 11px;
+  cursor: pointer;
+}
+
+.deleteRecipe:hover {
+  color: rgb(233, 233, 233) !important;
+  background-color: rgb(169, 102, 102);
+}
+
 /* .divider {
   position: relative;
   margin-top: -10px;
@@ -140,7 +234,7 @@
   object-fit: contain;
 } */
 
-@media screen and (max-width: 1800px) {
+@media screen and (min-width: 1200px) and (max-width: 1800px) {
   .recipeContainer {
     left: 15%;
     right: 15%;
@@ -150,7 +244,7 @@
   }
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (min-width: 950px) and (max-width: 1200px) {
   .recipeContainer {
     left: 15%;
     right: 15%;
@@ -160,7 +254,7 @@
   }
 }
 
-@media screen and (max-width: 950px) {
+@media screen and (min-width: 850px) and(max-width: 950px) {
   .recipeContainer {
     left: 10%;
     right: 10%;
@@ -170,7 +264,7 @@
   }
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (min-width: 600px) and (max-width: 850px) {
   .recipeContainer {
     left: 5%;
     right: 5%;
@@ -180,7 +274,7 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (min-width: 500px) and (max-width: 600px) {
   .recipeContainer {
     left: 5%;
     right: 5%;
@@ -218,97 +312,4 @@
     margin-left: 10px;
     margin-right: 10px;
   }
-}
-
-.loadingContainer {
-  position: relative;
-  top: 15vh;
-  left: 40vw;
-  right: 40vw;
-  height: 20vw;
-  width: 20vw;
-  /* background-color: sienna; */
-}
-
-/* .loadingContainer > img {
-  background-color: slateblue;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-} */
-
-.plate {
-  position: relative;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  height: 20vw;
-  width: 20vw;
-}
-
-.carrot {
-  position: absolute;
-  top: 2.5vw;
-  left: 2.5vw;
-  right: 2.5vw;
-  bottom: 2.5vw;
-  height: 15vw;
-  width: 15vw;
-}
-
-.loadingText {
-  font-family: "Arvo", serif;
-  position: absolute;
-  font-size: 2.5vw;
-  width: 40vw;
-  left: 30vw;
-  right: 30vw;
-  color: rgb(58, 58, 58);
-  /* white-space: nowrap; */
-  margin-top: 16vh;
-}
-
-.editRecipe {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border: none !important;
-  border-bottom: none !important;
-  border-radius: 15px;
-  background-color: rgb(169, 112, 112);
-  color: white;
-  font-family: "Saira Extra Condensed", sans-serif;
-  justify-content: center !important;
-  align-content: center !important;
-  font-size: 25px;
-  padding-top: 11px;
-}
-
-.editRecipe:hover {
-  color: rgb(233, 233, 233) !important;
-  background-color: rgb(169, 102, 102);
-}
-
-.deleteRecipe {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border: none !important;
-  border-bottom: none !important;
-  border-radius: 15px;
-  background-color: rgb(169, 112, 112);
-  color: white;
-  font-family: "Saira Extra Condensed", sans-serif;
-  justify-content: center !important;
-  align-content: center !important;
-  font-size: 25px;
-  padding-top: 11px;
-}
-
-.deleteRecipe:hover {
-  color: rgb(233, 233, 233) !important;
-  background-color: rgb(169, 102, 102);
 }

@@ -133,7 +133,7 @@
   bottom: 0px;
   background-color: rgba(0, 0, 0, 0.753);
   right: 0px;
-  top: -120px;
+  top: -140px;
   z-index: 20000;
 }
 
@@ -249,7 +249,7 @@
 .filterDiv {
   position: absolute;
   width: 240px;
-  height: 100%;
+  bottom: 0px;
   background-color: rgba(0, 0, 0, 0.753);
   right: 0px;
   opacity: 0;
