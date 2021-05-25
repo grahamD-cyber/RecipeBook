@@ -17,8 +17,8 @@ class Browse extends Component {
       items: [],
       spinAnim: new Animated.Value(0),
       filterMessage: "Sort Z-A",
-      gallery: 0,
-      viewMessage: "List View",
+      gallery: 1,
+      viewMessage: "Gallery View",
       imageSource: "./images/sortIcon.jpg"
     };
   }
