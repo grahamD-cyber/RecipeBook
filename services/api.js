@@ -1,7 +1,7 @@
 const pool = require("../dbConfig")
 
 const listAllRecipeNames = async function(sort = 0) {
-    var query = 'SELECT "idMeal","mealName" FROM public."Recipe" ORDER BY "mealName"'
+    var query = 'SELECT "idMeal","mealThumbnail","mealName" FROM public."Recipe" ORDER BY "mealName"'
     var sortType = ""
     if (sort == 1) {
         sortType = "ASC"
