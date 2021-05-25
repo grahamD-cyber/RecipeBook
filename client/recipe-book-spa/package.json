@@ -9,8 +9,6 @@
     "axios": "^0.21.1",
     "elemental": "^0.6.1",
     "material-react-toastify": "^1.0.1",
-    "mdb-react-ui-kit": "^1.0.0-beta5",
-    "mdbreact": "^5.0.2",
     "react": "^17.0.2",
     "react-addons-css-transition-group": "^15.6.2",
     "react-bootstrap-validation": "^0.1.11",
