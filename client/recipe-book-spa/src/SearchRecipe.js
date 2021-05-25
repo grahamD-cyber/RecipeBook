@@ -234,11 +234,7 @@ class SearchRecipe extends Component {
       return (
       <HashRouter>
         <div className = "contentContainer">
-          <SpringScrollbars>
-          <div className = "spatulaContainer">
-              <img className = "spatula" alt="SpatulaImg" src = "/images/spatulaImage.png"/>
-          </div>
-          <div className = {this.state.filterDiv}>
+        <div className = {this.state.filterDiv}>
             <button onClick = {this.handleCancelFilter} className = {this.state.stopFilter}>
               <div className = "xLine1"></div>
               <div className = "xLine2"></div>
@@ -258,6 +254,11 @@ class SearchRecipe extends Component {
             <div className = {this.state.dropdownDiv}>
               <button className = {this.state.clearFilter} onClick = {this.cancelFilter}>Clear Filters</button>
             </div>
+          </div>
+          <SpringScrollbars>
+          
+          <div className = "spatulaContainer">
+              <img className = "spatula" alt="SpatulaImg" src = "/images/spatulaImage.png"/>
           </div>
           <div className = "searchHeader">
             <h1 className = "searchHeaderText">Search Results for "{this.state.term}"</h1>

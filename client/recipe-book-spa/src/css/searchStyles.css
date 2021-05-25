@@ -133,7 +133,7 @@
   bottom: 0px;
   background-color: rgba(0, 0, 0, 0.753);
   right: 0px;
-  top: -140px;
+  top: -140px !important;
   z-index: 20000;
 }
 
