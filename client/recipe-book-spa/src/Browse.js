@@ -141,7 +141,6 @@ class Browse extends Component {
         }
         return r;
       }, {});
-      console.log(items.data.recipes)
       if (this.state.gallery === 0)
       {
         return(

@@ -166,8 +166,6 @@ class EditRecipe extends Component {
         recipeData.Type = this.state.mainType
     }
 
-    const test = `/api/updateRecipe/${this.state.id}`
-
     RecipeApi.put(`/api/updateRecipe/${this.state.id}`, recipeData).then((response) => {
         this.props.history.push(`/recipe/${this.state.id}`)
     });

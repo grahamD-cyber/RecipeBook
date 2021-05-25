@@ -4,7 +4,6 @@ import {
     HashRouter,
     
 } from "react-router-dom";
-import SearchRecipe from "./SearchRecipe.js";
 
 class Home extends Component {
     constructor(props) {

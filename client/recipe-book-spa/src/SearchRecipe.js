@@ -1,15 +1,13 @@
 import React, { Component } from "react";
 import { Animated, Easing } from 'react-native';
-// import { MDBCard, MDBCardImage, MDBCardBody, MDBCardTitle, MDBCardText, MDBRow, MDBCol } from 'mdb-react-ui-kit';
-import { MDBCard, MDBCardTitle, MDBBtn, MDBCardGroup, MDBCardImage, MDBCardText, MDBCardBody } from "mdbreact";
 import {
   NavLink,
-  HashRouter,
-  Link
+  HashRouter
 } from "react-router-dom";
 import RecipeApi from "./services/RecipeApi";
 import "./css/searchStyles.css";
 import DropdownButton from "./DropdownButton.js";
+import SpringScrollbars from "./services/SpringScrollBar";
  
 class SearchRecipe extends Component {
   constructor(props) {
@@ -59,7 +57,6 @@ class SearchRecipe extends Component {
       finishedFilter: "finishedFilter",
       clearFilter: "clearFilter"
     });
-    console.log("X pressed")
     event.preventDefault();
   }
 
@@ -108,21 +105,18 @@ class SearchRecipe extends Component {
     var filteredArray = recipeArray
     if (category !== "Choose a Category")
     {
-      console.log("category is not Choose a category")
       filteredArray = filteredArray.filter(function(item) {
         return item.Category === category
       })
     }
     if (region !== "Choose a Region")
     {
-      console.log("region is not Choose a region")
       filteredArray = filteredArray.filter(function(item) {
         return item.Region === region
       })
     }
     if (type !== "Choose a Type")
     {
-      console.log("type is not Choose a Type")
       filteredArray = filteredArray.filter(function(item) {
         return item.Type === type
       })
@@ -240,6 +234,7 @@ class SearchRecipe extends Component {
       return (
       <HashRouter>
         <div className = "contentContainer">
+          <SpringScrollbars>
           <div className = "spatulaContainer">
               <img className = "spatula" alt="SpatulaImg" src = "/images/spatulaImage.png"/>
           </div>
@@ -276,6 +271,7 @@ class SearchRecipe extends Component {
               {recipeIcons}
             </div>
           </div>
+          </SpringScrollbars>
         </div>
         </HashRouter>
 

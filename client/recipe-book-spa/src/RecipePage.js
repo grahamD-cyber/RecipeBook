@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {NavLink} from "react-router-dom";
-import { View,Animated, Easing } from 'react-native';
+import { Animated, Easing } from 'react-native';
 import RecipeApi from "./services/RecipeApi";
 import "./css/recipeStyles.css";
 import SpringScrollbars from "./services/SpringScrollBar";
@@ -105,7 +105,6 @@ class Recipe extends Component {
           }
           const tags = "Tags: " + newTags;
           const type = "Type: " + recipe.Type;
-          const youtube = recipe.Youtube + "?rel=0&amp;controls=0&amp;showinfo=0"
           var ingredientNum = recipe.ingredient1;
           var measureNum = recipe.measure1;
           var i = 1;
@@ -118,9 +117,9 @@ class Recipe extends Component {
             measureNum = eval("recipe.measure" + i)
           }
           var makeIngredients = [];
-          for (var i = 0; i < ingredients.length; i++) {
-              var item1 = ingredients[i];
-              var item2 = measurements[i];
+          for (var j = 0; j < ingredients.length; j++) {
+              var item1 = ingredients[j];
+              var item2 = measurements[j];
               makeIngredients.push(<div className = "mainIngredientText"><img className = "ingredientBullet" src = "../images/ingredientIcon.png" alt = "bulletpoint"/><div className = "measurementText">{item2}</div><div className = "ingredientText">{item1}  </div></div>);
           }
           return (
