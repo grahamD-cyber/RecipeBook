@@ -40,7 +40,7 @@ It supports all the basic CRUD functionalities,
   ![EditRecipePage](https://user-images.githubusercontent.com/36131683/119292425-3978ab80-bc05-11eb-8a7b-52ab3b8e132f.png)
 
 ## References 
-  https://www.themealdb.com/api.php (API used to populate Database)
+  https://www.themealdb.com/api.php (API used to populate Database)  
   https://www.youtube.com/watch?v=J01rYl9T3BU (PERN Stack Course - Build a Yelp clone (Postgres, Express, React, Node.js)  
   Heroku Documentation  
   Lots and lots of npm module documentations  
