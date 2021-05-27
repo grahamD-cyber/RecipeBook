@@ -1,7 +1,6 @@
 const express = require("express"); // import express module (simplifies routing/requests, among other things)
 const cors = require("cors"); // import the CORS library to allow Cross-origin resource sharing
 const app = express(); // create an instance of the express module (app is the conventional variable name used)
-const path = require("path");
 
 const services = require("./services/api");
 

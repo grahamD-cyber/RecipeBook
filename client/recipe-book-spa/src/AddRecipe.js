@@ -89,8 +89,6 @@ class AddRecipe extends Component {
   {
     if (this.state.numIngredients <= 20)
     {
-      
-      // this.setState({ ingredientBlocks: this.state.ingredientBlocks.push(this.state.numRecipes)})
       const slides = this.state.ingredientBlocks.map((item) => {
         return (
           <div id = {`ingredientContainer${item}`} className = "ingredientContainer">
@@ -99,7 +97,8 @@ class AddRecipe extends Component {
           </div>
         );
       });
-      if (this.state.numIngredients === 4){
+      if (this.state.numIngredients === 4) 
+      {
         const newNum = this.state.numIngredients + 1
         this.setState({
         numIngredients: newNum,
@@ -128,10 +127,12 @@ class AddRecipe extends Component {
   getIngredientsOrMeasure(recipeData, parentArray, fieldName) {
     for (var i = 1; i <= 20; i++) {
       const fullFieldName = fieldName + i;
-      if (parentArray[fullFieldName] != null) {
+      if (parentArray[fullFieldName] != null) 
+      {
         // if ingredient value present add to recipe Object
         recipeData[fullFieldName] = parentArray[fullFieldName]
-      } else {
+      } else 
+      {
         // if no ingredient value present set as blank
         recipeData[fullFieldName] = "";
       }
@@ -271,9 +272,7 @@ class AddRecipe extends Component {
             <div className = "mainInput">
                 <input name = "Youtube" value={this.state.Youtube} onChange={this.changeHandler} type = "url" className = "text-center mainInput youtubeInput" placeholder = "YouTube URL"></input>
                 <img className = "uploadImage" alt = "video" src = "../images/videoIcon.png"/>
-            </div>
-            {/* <Tag/> */}
-          
+            </div>          
             <button id = "submitButton" className = "text-center submitButton" type="submit">Submit Recipe</button>
           </form>
         </div>

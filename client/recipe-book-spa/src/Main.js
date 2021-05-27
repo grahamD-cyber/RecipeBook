@@ -1,4 +1,3 @@
-
 import React, { Component } from "react";
 import {
     Route,
@@ -21,9 +20,9 @@ class Main extends Component {
             backgroundClass: "background",
             browseClass: "browseButton",
             homeClass: "homeButton",
-            line1: "line1",
-            line2: "line2",
-            line3: "line3"
+            burgerLine1: "line1",
+            burgerLine2: "line2",
+            burgerLine3: "line3"
         };
         }
 
@@ -34,9 +33,9 @@ class Main extends Component {
                 backgroundClass: "backgroundActive",
                 browseClass: "browseButtonActive",
                 homeClass: "homeButtonActive",
-                line1: "line1Active",
-                line2: "line2Active",
-                line3: "line3Active"
+                burgerLine1: "line1Active",
+                burgerLine2: "line2Active",
+                burgerLine3: "line3Active"
             });
         }
         else
@@ -45,9 +44,9 @@ class Main extends Component {
                 backgroundClass: "background",
                 browseClass: "browseButton",
                 homeClass: "homeButton",
-                line1: "line1",
-                line2: "line2",
-                line3: "line3"
+                burglerLine1: "line1",
+                burgerLine2: "line2",
+                burgerLine3: "line3"
             });
         }
 
@@ -60,9 +59,9 @@ class Main extends Component {
                 backgroundClass: "background",
                 browseClass: "browseButton",
                 homeClass: "homeButton",
-                line1: "line1",
-                line2: "line2",
-                line3: "line3"
+                burgerLine1: "line1",
+                burgerLine2: "line2",
+                burgerLine3: "line3"
             });
         }
     }
@@ -80,9 +79,9 @@ class Main extends Component {
                 </ul> 
             </div>
             <button className="burger" onClick = {this.handleNav}>
-                <div className={this.state.line1}></div>
-                <div className={this.state.line2}></div>
-                <div className={this.state.line3}></div>
+                <div className={this.state.burgerLine1}></div>
+                <div className={this.state.burgerLine2}></div>
+                <div className={this.state.burgerLine3}></div>
             </button>
         </nav>
         <div className="content">
