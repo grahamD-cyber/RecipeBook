@@ -4,10 +4,13 @@ import DropdownButton from "./DropdownButton.js";
 import RecipeApi from "./services/RecipeApi";
 import {Animated, Easing } from 'react-native';
 import SpringScrollbars from "./services/SpringScrollBar";
+import { ToastContainer, toast } from 'material-react-toastify';
+import 'material-react-toastify/dist/ReactToastify.css';
 
 class EditRecipe extends Component {
   constructor(props) {
     super(props);
+    this.newIngredient = this.newIngredient.bind(this);
     this.submitData = this.submitData.bind(this);
     this.changeCategory = this.changeCategory.bind(this);
     this.changeRegion = this.changeRegion.bind(this);
@@ -28,8 +31,32 @@ class EditRecipe extends Component {
       spinAnim: new Animated.Value(0),
       categoryOpen: false,
       regionOpen: false,
-      typeOpen: false
+      typeOpen: false,
+      ingredientBlocks: [4],
+      initialNumIngredients: 0,
+      ingredients: {},
+      measures: {},
+      numIngredients: 4,
+      finalBlocks: [],
+      newIngredientButton: "newIngredient",
     };
+  }
+
+
+  ingredientsChangeHandler = (event) => {
+    let nam = event.target.id;
+    let val = event.target.value;
+    var ingredientObj = this.state.ingredients
+    ingredientObj[nam] = val
+    this.setState({ingredients: ingredientObj})
+  }
+
+  measuresChangeHandler = (event) => {
+    let nam = event.target.id;
+    let val = event.target.value;
+    var measuresObj = this.state.measures
+    measuresObj[nam] = val
+    this.setState({measures: measuresObj})
   }
 
   changeHandler = (event) => {
@@ -62,6 +89,34 @@ class EditRecipe extends Component {
     this.setState({ typeOpen : newValue });
   }
 
+  newIngredient(event)
+  {
+    if (this.state.numIngredients <= 20)
+    {
+      const slides = this.state.ingredientBlocks.map((item) => {
+        return (
+          <div id = {`ingredientContainer${item}`} className = "ingredientContainer">
+              <input id = {`ingredient${item}`} value = {this.state.ingredients[`ingredient"${item}`]} onChange={this.ingredientsChangeHandler} className = "text-center ingredientInput" placeholder = {`Ingredient ${item}`}></input>
+              <span><input id = {`measure${item}`} value = {this.state.measures[`measure"${item}`]} onChange={this.measuresChangeHandler} className = "text-center measureInput" placeholder = "Measure/Units"></input></span>
+          </div>
+        );
+      });
+        
+      const newNum = this.state.numIngredients + 1
+      var newBlocks = this.state.finalBlocks
+      newBlocks = newBlocks.concat(slides)
+      this.setState({
+      numIngredients: newNum,
+      ingredientBlocks: [newNum],
+      finalBlocks: newBlocks});
+      if (this.state.numIngredients === 20)
+      {
+        this.setState({newIngredientButton: "newIngredientGone"})
+      }
+    } 
+    event.preventDefault();
+  }
+
   getIngredientsOrMeasure(recipeData, parentArray, fieldName) {
     for (var i = 1; i <= 20; i++) {
       const fullFieldName = fieldName + i;
@@ -75,6 +130,50 @@ class EditRecipe extends Component {
         recipeData[fullFieldName] = "";
       }
     }
+  }
+
+  validateFields() {
+    var isValid = true;
+    var errMsg;
+    var mealName = this.state.mealName ? this.state.mealName : "";
+    var ingredient1 = this.state.ingredients["ingredient1"];
+    var measure1 = this.state.measures["measure1"];
+    var mealThumbnail = this.state.mealThumbnail ? this.state.mealThumbnail : "";
+    var Instructions = this.state.Instructions ? this.state.Instructions : "";
+
+    if (mealName === "") {
+      isValid = false;
+      errMsg = "Meal Name is mandatory"
+    }
+
+    if (isValid && ingredient1 === undefined) {
+      isValid = false;
+      errMsg = "Recipe should have at least one ingredient"
+    }
+
+    if (isValid && measure1 === undefined) {
+      isValid = false;
+      errMsg = "Ingredient should have some measure"
+    }
+
+    if (isValid && Instructions === "") {
+      isValid = false;
+      errMsg = "Recipe instructions are mandatory"
+    }
+
+    if (isValid && mealThumbnail === "") {
+      isValid = false;
+      errMsg = "Thumbnail URL is mandatory"
+    }
+
+    if (!isValid) {
+      toast.dark(errMsg, {
+        position:"top-right",
+        autoClose: 3000,
+        closeOnClick: true
+      });
+    }
+    return isValid;
   }
 
   componentDidMount() {
@@ -112,6 +211,32 @@ class EditRecipe extends Component {
         {
             newType = recipe.Type
         }
+
+        var makeIngredients = [];
+        var item1 =  eval("recipe.ingredient" + 1)
+        var i = 1;
+        while (item1 !== null && item1 !== "" && i <= 20) {
+              const item2 =  eval("recipe.measure" + i)
+              const ingredientId = ("ingredient" + i)
+              const measureId = ("measure" + i)
+              const divId = ("ingredientContainer" + i)
+              makeIngredients.push(<div id = {divId} className = "ingredientContainer">
+              <input id = {ingredientId} onChange={this.ingredientsChangeHandler} className = "text-center ingredientInput" defaultValue = {item1}></input>
+              <span><input id = {measureId} onChange={this.measuresChangeHandler} className = "text-center measureInput" defaultValue = {item2}></input></span>
+              </div>);
+              var currIngredients = this.state.ingredients
+              currIngredients[`ingredient${i}`] = item1
+              var currMeasures = this.state.measures
+              currMeasures[`measure${i}`] = item2
+
+              this.setState ({
+                ingredients: currIngredients,
+                measures: currMeasures
+              });
+              i = i + 1;
+              item1 =  eval("recipe.ingredient" + i)
+        }
+        const numInitial = i;
         this.setState({
             isLoaded: true,
             items: result.data,
@@ -123,7 +248,11 @@ class EditRecipe extends Component {
             mainCategory: newCategory,
             mainRegion: newRegion,
             mainType: newType,
-            id: recipe.idMeal
+            id: recipe.idMeal,
+            numIngredients: numInitial,
+            ingredientBlocks: [numInitial],
+            finalBlocks: makeIngredients,
+            initialNumIngredients: numInitial+1
         });
       },
       (error) => {
@@ -136,66 +265,48 @@ class EditRecipe extends Component {
   }
   submitData = (event) => {
     event.preventDefault();
-    var recipeData = {};
-    recipeData.mealName = this.state.mealName ? this.state.mealName : "";
-    this.getIngredientsOrMeasure(recipeData, this.state.ingredients, "ingredient");
-    this.getIngredientsOrMeasure(recipeData, this.state.measures, "measure");
-    recipeData.mealThumbnail = this.state.mealThumbnail ? this.state.mealThumbnail : "";
-    recipeData.Instructions = this.state.Instructions ? this.state.Instructions : "";
-    recipeData.Tags = this.state.Tags ? this.state.Tags : "";
-    if (this.state.mainRegion === "Choose a Region")
+    if (this.validateFields())
     {
-        recipeData.Region = ""
-    }
-    else
-    {
-        recipeData.Region = this.state.mainRegion
-    }
-    if (this.state.mainCategory === "Choose a Category")
-    {
-        recipeData.Category = ""
-    }
-    else
-    {
-        recipeData.Category = this.state.mainCategory
-    }
-    if (this.state.mainType === "Choose a Type")
-    {
-        recipeData.Type = ""
-    }
-    else
-    {
-        recipeData.Type = this.state.mainType
-    }
+      var recipeData = {};
+      recipeData.mealName = this.state.mealName ? this.state.mealName : "";
+      this.getIngredientsOrMeasure(recipeData, this.state.ingredients, "ingredient");
+      this.getIngredientsOrMeasure(recipeData, this.state.measures, "measure");
+      recipeData.mealThumbnail = this.state.mealThumbnail ? this.state.mealThumbnail : "";
+      recipeData.Instructions = this.state.Instructions ? this.state.Instructions : "";
+      recipeData.Tags = this.state.Tags ? this.state.Tags : "";
+      if (this.state.mainRegion === "Choose a Region")
+      {
+          recipeData.Region = ""
+      }
+      else
+      {
+          recipeData.Region = this.state.mainRegion
+      }
+      if (this.state.mainCategory === "Choose a Category")
+      {
+          recipeData.Category = ""
+      }
+      else
+      {
+          recipeData.Category = this.state.mainCategory
+      }
+      if (this.state.mainType === "Choose a Type")
+      {
+          recipeData.Type = ""
+      }
+      else
+      {
+          recipeData.Type = this.state.mainType
+      }
 
-    RecipeApi.put(`/api/updateRecipe/${this.state.id}`, recipeData).then((response) => {
-        this.props.history.push(`/recipe/${this.state.id}`)
-    });
+      RecipeApi.put(`/api/updateRecipe/${this.state.id}`, recipeData).then((response) => {
+          this.props.history.push(`/recipe/${this.state.id}`)
+      });
+    }
   };
 
   render() {
 
-    function newIngredientClicked() {
-        if (numIngredients <= 20) {
-          const div = document.createElement("div");
-          div.classList.add("ingredientContainer");
-          var num = String(numIngredients);
-          div.innerHTML = `<input id = "ingredient${num}" class = "text-center ingredientInput" placeholder = "Ingredient ${num}"></input>
-          <span><input id = "measure${num}" class = "text-center measureInput" placeholder = "Measure/Units"></input></span>`;
-          document.querySelector(".moreIngredients").appendChild(div);
-          numIngredients = numIngredients + 1;
-        } else {
-          const div = document.createElement("div");
-          document
-            .getElementById("newIngredientButton")
-            .classList.add("newIngredientGone");
-          document
-            .getElementById("newIngredientButton")
-            .classList.remove("newIngredient");
-          div.innerHTML = `<h2 class = "text-center">Only 20 Ingredients Allowed.</h2>`;
-          document.querySelector(".moreIngredients").appendChild(div);
-        }
-      }
     const spin = this.state.spinAnim.interpolate({
         inputRange: [0, 1],
         outputRange: ['0deg', '360deg']
@@ -225,32 +336,9 @@ class EditRecipe extends Component {
         </div>);
       } else {
           
-        if (items && items.data && items.data.recipes) 
-        {
-            if (Array.isArray(items.data.recipes))
-            {
-                var recipe = items.data.recipes[0];
-            }
-        }
-        var makeIngredients = [];
-        var item1 =  eval("recipe.ingredient" + 1)
-        var i = 1;
-        while (item1 !== null && item1 !== "" && i <= 20) {
-              const item2 =  eval("recipe.measure" + i)
-              const ingredientId = ("ingredient" + i)
-              const measureId = ("measure" + i)
-              const divId = ("ingredientContainer" + i)
-              makeIngredients.push(<div id = {divId} className = "ingredientContainer">
-              <input id = {ingredientId} className = "text-center ingredientInput" defaultValue = {item1}></input>
-              <span><input id = {measureId} className = "text-center measureInput" defaultValue = {item2}></input></span>
-              </div>);
-              i = i + 1;
-              item1 =  eval("recipe.ingredient" + i)
-        }
-        var numIngredients = i;
-
         return (
         <div className = "contentContainer">
+          <ToastContainer />
           <SpringScrollbars>
             <div className = "spatulaContainer">
                 <img className = "spatula" alt="SpatulaImg" src = "/images/spatulaImage.png"/>
@@ -259,10 +347,10 @@ class EditRecipe extends Component {
             <h1 className = "text-center">Edit Recipe.</h1>
             <form method="POST" onSubmit={this.submitData}>
                 <input name = "mealName" onChange={this.changeHandler} className = "text-center mainInput" type="text" defaultValue={this.state.mealName}></input>
-                {makeIngredients}
+                {this.state.finalBlocks}
                 <div id = "moreIngredients" className = "moreIngredients"></div>
-                <button type="button" id = "newIngredientButton" className = "newIngredient" onClick={newIngredientClicked}>+ Add Ingredient</button>
-                <textarea name = "Instructions" required onChange={this.changeHandler} className = "directionsInput" type = "text" defaultValue = {this.state.Instructions}></textarea>
+                <button type="button" id = "newIngredientButton" className = {this.state.newIngredientButton} onClick={this.newIngredient}>+ Add Ingredient</button>
+                <textarea name = "Instructions" onChange={this.changeHandler} className = "directionsInput" type = "text" defaultValue = {this.state.Instructions}></textarea>
                 <div className = "mainInput">
                     <input name = "mealThumbnail" defaultValue={this.state.mealThumbnail} onChange={this.changeHandler} className = "text-center mainInput youtubeInput"></input>
                     <img className = "uploadImage" alt = "upload" src = "../images/photoIcon.png"/>
