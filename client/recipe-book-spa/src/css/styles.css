@@ -3,6 +3,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Saira+Extra+Condensed:wght@300&display=swap");
 body {
   background-color: rgb(229, 160, 160) !important;
+  /* background-color: rgba(179, 179, 179, 0.562); */
 }
 
 /*This is the animation function for text menu elements*/

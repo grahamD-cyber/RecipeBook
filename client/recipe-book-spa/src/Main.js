@@ -44,7 +44,7 @@ class Main extends Component {
                 backgroundClass: "background",
                 browseClass: "browseButton",
                 homeClass: "homeButton",
-                burglerLine1: "line1",
+                burgerLine1: "line1",
                 burgerLine2: "line2",
                 burgerLine3: "line3"
             });
